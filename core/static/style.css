@@ -66,6 +66,7 @@ main { padding: 0; }
 .card p { flex-grow: 1; margin-bottom: 20px; color: #666; }
 
 .main-footer {
+    flex-shrink: 0; 
     background-color: #343a40;
     color: #f8f9fa;
     padding: 40px 0;
