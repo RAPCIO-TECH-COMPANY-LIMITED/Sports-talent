@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Discover Talents{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'core/css/discover.css' %}" />
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="discover-header">
+        <h2>Discover the Next Generation of Football Stars</h2>
+        <p>Browse profiles from talented players across East Africa.</p>
+        
+        <form class="search-form" method="get" action="{% url 'discover_talents' %}">
+            <input type="text" name="q" class="search-input" placeholder="Search by name, position, or country..." value="{{ search_query|default:'' }}">
+            <button type="submit" class="search-button">Search</button>
+        </form>
+    </div>
+
+    <div class="player-grid">
+        {% for player in players %}
+            <div class="player-card">
+                <div class="player-avatar"></div>
+                <h3>{{ player.user.get_full_name|default:player.user.username }}</h3>
+                <p class="player-info">{{ player.position }} | {{ player.country }}</p>
+                <a href="{% url 'player_detail' player.pk %}" class="btn-secondary">View Profile</a>
+            </div>
+        {% empty %}
+            <div class="empty-state">
+                <p>No players found matching your search criteria. Try another search!</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

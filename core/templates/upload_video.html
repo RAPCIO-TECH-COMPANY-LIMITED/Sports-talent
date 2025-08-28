@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Upload Video{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'core/css/upload.css' %}" />
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="upload-container">
+        <h2>Upload Your Skill Video</h2>
+        <p>Showcase your best moments. Keep videos short and high-impact!</p>
+        
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                {{ form.title.label_tag }}
+                {{ form.title }}
+                {{ form.title.errors }}
+            </div>
+
+            <div class="form-group">
+                {{ form.video_file.label_tag }}
+                <div class="file-drop-area">
+                    <span class="file-msg">Click to browse or drag and drop video</span>
+                    <span class="file-msg-light">Maximum file size: 50MB</span>
+                    {{ form.video_file }}
+                </div>
+                {{ form.video_file.errors }}
+            </div>
+
+            <button type="submit" class="submit-btn">Upload Video</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    const fileInput = document.querySelector('.file-input');
+    const fileMsg = document.querySelector('.file-msg');
+
+    fileInput.addEventListener('change', () => {
+        if (fileInput.files.length > 0) {
+            fileMsg.textContent = `File selected: ${fileInput.files[0].name}`;
+        } else {
+            fileMsg.textContent = 'Click to browse or drag and drop video';
+        }
+    });
+</script>
+{% endblock %}

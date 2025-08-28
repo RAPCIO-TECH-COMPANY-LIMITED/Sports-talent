@@ -1,0 +1,112 @@
+.upload-container {
+    max-width: 700px;
+    margin: 40px auto;
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.upload-container h2 {
+    font-size: 2em;
+    color: #004080;
+    margin-bottom: 5px;
+}
+
+.upload-container p {
+    color: #555;
+    margin-bottom: 30px;
+}
+
+/* Styling for the custom file input area */
+.file-drop-area {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    padding: 40px;
+    border: 2px dashed #004080;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    transition: background-color 0.3s, border-color 0.3s;
+    cursor: pointer;
+}
+
+.file-drop-area:hover {
+    background-color: #f1f3f5;
+}
+
+.file-input {
+    /* Hide the actual file input */
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.file-msg {
+    font-size: 1.1em;
+    font-weight: 500;
+    color: #555;
+}
+
+.file-msg-light {
+    display: block;
+    font-size: 0.9em;
+    color: #888;
+    margin-top: 5px;
+}
+
+/* We reuse the form-group styles from our forms.css */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+}
+
+.form-group input[type="text"] {
+    width: 100%;
+    padding: 12px 15px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    font-family: 'Poppins', sans-serif;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-group input[type="text"]:focus {
+    outline: none;
+    border-color: #004080;
+    background-color: #fff;
+    box-shadow: 0 0 0 3px rgba(0, 64, 128, 0.1);
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 15px;
+    background-color: #004080;
+    border: none;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 1.1em;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-top: 10px;
+}
+
+.submit-btn:hover {
+    background-color: #003366;
+    transform: translateY(-2px);
+}

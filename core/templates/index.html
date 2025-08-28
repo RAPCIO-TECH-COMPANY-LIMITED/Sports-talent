@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section class="hero">
+    <div class="container">
+        <h2 class="hero-title">Your Journey Starts Here</h2>
+        <p class="hero-subtitle">
+            The #1 platform connecting talented footballers in Uganda, Kenya, and Tanzania with clubs and scouts. Showcase your skills and discover hidden gems.
+        </p>
+        <a href="{% url 'register' %}" class="btn btn-primary">Get Started Now</a>
+    </div>
+</section>
+
+<section class="features">
+    <div class="container">
+        <div class="cards">
+            <div class="card">
+                <h3>For Players</h3>
+                <p>
+                    Create your profile, upload videos of your best moments—goals, skills, saves—and get noticed by top clubs across the region.
+                </p>
+                <a href="{% url 'register' %}" class="btn btn-secondary">Create Your Profile</a>
+            </div>
+            <div class="card">
+                <h3>For Clubs & Scouts</h3>
+                <p>
+                    Browse through a growing database of aspiring footballers. Filter by country, position, and age to find the exact talent your team needs.
+                </p>
+                <a href="{% url 'register' %}" class="btn btn-secondary">Find Talent Now</a>
+            </div>
+            <div class="card">
+                <h3>How It Works</h3>
+                <p>
+                    Our platform is simple. Players sign up and upload videos. Clubs sign up and search for players. It's a direct connection to opportunity.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

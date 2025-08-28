@@ -1,0 +1,236 @@
+/* Use a Google Font for a modern look */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+body {
+    background-color: #eef2f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* The main container that holds both columns */
+.register-container {
+    display: flex;
+    width: 100%;
+    max-width: 900px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Ensures the border-radius affects child elements */
+}
+
+/* The Left "Promo" Panel (Yellow) */
+.promo-panel {
+    background-color: #ffcc00;
+    color: #004080;
+    width: 40%;
+    padding: 50px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.promo-panel .avatar {
+    width: 100px;
+    height: 100px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    margin: 0 auto 20px auto;
+    /* In a real app, you'd put an <img/> or SVG here */
+}
+
+.promo-panel h2 {
+    font-size: 2em;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 15px;
+}
+
+/* The Right "Form" Panel (White) */
+.form-panel {
+    width: 60%;
+    padding: 50px 40px;
+}
+
+.form-panel h3 {
+    font-size: 1.8em;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* Tab buttons are now more subtle */
+.tab-buttons {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.tab-button {
+    background: none;
+    border: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1em;
+    font-weight: 500;
+    color: #999;
+    cursor: pointer;
+    padding-bottom: 5px;
+    border-bottom: 2px solid transparent;
+    transition: color 0.3s, border-color 0.3s;
+}
+
+.tab-button.active {
+    color: #004080;
+    font-weight: 600;
+    border-bottom-color: #004080;
+}
+
+/* Manual Form Field Styling */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    font-size: 0.9em;
+    color: #555;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 15px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    font-family: 'Poppins', sans-serif;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #004080;
+    background-color: #fff;
+    box-shadow: 0 0 0 3px rgba(0, 64, 128, 0.1);
+}
+
+/* Styling for Django's validation errors */
+.form-group .errorlist {
+    list-style: none;
+    padding: 0;
+    margin: 5px 0 0 0;
+    font-size: 0.8em;
+    color: #d93025;
+}
+
+/* Main submit button */
+.submit-btn {
+    width: 100%;
+    padding: 15px;
+    background-color: #004080;
+    border: none;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 1.1em;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.submit-btn:hover {
+    background-color: #003366;
+    transform: translateY(-2px);
+}
+
+.login-link {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 0.9em;
+}
+
+.login-link a {
+    color: #004080;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+/* Hide inactive form sections */
+.form-section { display: none; }
+.form-section.active { display: block; }
+
+
+.login-container {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px; /* A bit narrower for a typical login form */
+    box-sizing: border-box;
+}
+
+.login-header {
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+.login-header .logo {
+    font-size: 1.2em;
+    font-weight: 700;
+    color: #004080;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 20px;
+}
+
+.login-header h1 {
+    font-size: 2.2em;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+}
+
+.login-header p {
+    color: #555;
+    margin-top: 5px;
+}
+
+.forgot-password {
+    display: block;
+    width: fit-content;
+    margin: -10px 0 20px 0;
+    font-size: 0.9em;
+    font-weight: 600;
+    color: #004080;
+    text-decoration: none;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+.signup-link {
+    text-align: center;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.signup-link a {
+    color: #004080;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.signup-link a:hover {
+    text-decoration: underline;
+}

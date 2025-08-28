@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}My Dashboard{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'dashboard.css' %}" />
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="dashboard-grid">
+        <aside class="profile-sidebar">
+            <div class="profile-avatar"></div>
+            <h3>{{ user.get_full_name|default:user.username }}</h3>
+            <p class="meta">{{ profile.position }}</p>
+            <ul class="profile-details">
+                <li><strong>Country:</strong> {{ profile.country }}</li>
+                <li><strong>Born:</strong> {{ profile.date_of_birth|date:"F d, Y" }}</li>
+                <li><strong>Videos:</strong> {{ videos.count }}</li>
+            </ul>
+        </aside>
+
+        <div class="main-content">
+            <h2>Welcome Back!</h2>
+            <p class="welcome-text">This is your personal dashboard. Here you can manage your profile and showcase your skills.</p>
+            
+            <a href="{% url 'upload_video' %}" class="btn btn-primary">Upload New Video</a>
+            
+            <hr style="margin: 0 0 30px 0; border-color: #eee;">
+
+            <h3>Your Uploaded Videos</h3>
+
+            <div class="video-gallery">
+                {% for video in videos %}
+                    <div class="video-card">
+                        <video controls preload="metadata">
+                            <source src="{{ video.video_file.url }}" type="video/mp4">
+                            Sorry, your browser doesn't support embedded videos.
+                        </video>
+                        <div class="video-card-info">
+                            <h4>{{ video.title }}</h4>
+                            <p class="upload-date">Uploaded: {{ video.uploaded_at|date:"F d, Y" }}</p>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="empty-state">
+                        <p>You haven't uploaded any videos yet. <br> Click the button above to get started!</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - EA Football Talent</title>
+    <link rel="stylesheet" href="{% static 'form.css' %}" />
+</head>
+<body>
+    <div class="register-container">
+        <div class="promo-panel">
+            <div class="avatar"></div>
+            <h2>Let's get you set up</h2>
+            <p>It should only take a couple of minutes to create your account.</p>
+        </div>
+
+        <div class="form-panel">
+            <h3>Create Your Account</h3>
+            <div class="tab-buttons">
+                <button class="tab-button active" onclick="showForm('player')">I'm a Player</button>
+                <button class="tab-button" onclick="showForm('club')">I'm a Club/Scout/Agent</button>
+            </div>
+
+            <div id="player-form" class="form-section active">
+                <form method="post" novalidate>
+                    {% csrf_token %}
+                    {% for field in player_form %}
+                    <div class="form-group">
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {{ field.errors }}
+                        {% if field.help_text %}
+                            <small class="help-text">{{ field.help_text|safe }}</small>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    <button type="submit" name="register_player" class="submit-btn">Create Player Account</button>
+                </form>
+            </div>
+
+            <div id="club-form" class="form-section">
+                <form method="post" novalidate>
+                    {% csrf_token %}
+                    {% for field in club_form %}
+                    <div class="form-group">
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {{ field.errors }}
+                    </div>
+                    {% endfor %}
+                    <button type="submit" name="register_club" class="submit-btn">Create Club Account</button>
+                </form>
+            </div>
+
+            <div class="login-link">
+                <p>Already have an account? <a href="{% url 'login' %}">Log In</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const playerForm = document.getElementById('player-form');
+        const clubForm = document.getElementById('club-form');
+        const tabButtons = document.querySelectorAll('.tab-button');
+
+        function showForm(formType) {
+            const isPlayer = formType === 'player';
+            
+            playerForm.classList.toggle('active', isPlayer);
+            clubForm.classList.toggle('active', !isPlayer);
+
+            tabButtons[0].classList.toggle('active', isPlayer);
+            tabButtons[1].classList.toggle('active', !isPlayer);
+        }
+    </script>
+</body>
+</html>

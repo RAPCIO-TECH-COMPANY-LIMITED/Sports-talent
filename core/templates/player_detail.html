@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ player.user.get_full_name }}{% endblock %}
+
+{% block styles %}
+    {% endblock %}
+
+{% block content %}
+<div class="container" style="padding-top: 40px; padding-bottom: 40px;">
+    <div style="background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+        
+        <div style="display: flex; align-items: center; margin-bottom: 30px;">
+            <div style="width: 120px; height: 120px; border-radius: 50%; background-color: #e9ecef; margin-right: 30px;"></div>
+            <div>
+                <h1 style="font-size: 2.5em; margin: 0;">{{ player.user.get_full_name|default:player.user.username }}</h1>
+                <p style="font-size: 1.2em; color: #666; margin: 0;">{{ player.position }} | {{ player.country }} | Born: {{ player.date_of_birth|date:"Y" }}</p>
+            </div>
+        </div>
+
+        <div>
+            <h3>About Me</h3>
+            <p>{{ player.bio|default:"This player has not added a bio yet."|linebreaks }}</p>
+        </div>
+
+        <hr style="margin: 40px 0; border: 0; border-top: 1px solid #eee;">
+
+        <div>
+            <h3>Skill Videos</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+                {% for video in player.videos.all %}
+                    <div style="border: 1px solid #e9ecef; border-radius: 8px; overflow: hidden;">
+                        <video controls width="100%" preload="metadata">
+                            <source src="{{ video.video_file.url }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <h4 style="padding: 15px;">{{ video.title }}</h4>
+                    </div>
+                {% empty %}
+                    <p>This player has not uploaded any videos yet.</p>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}EA Football Talent{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+    {% block style %}{% endblock %}
+</head>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <a href="{% url 'home' %}" class="logo">EA Football Talent</a>
+            <nav class="main-nav">
+                <ul>
+                    {% if user.is_authenticated %}
+                        {% if user.user_type == 'player' %}
+                            <li><a href="{% url 'player_dashboard' %}">My Dashboard</a></li>
+                        {% elif user.user_type == 'club' %}
+                            <li><a href="{% url 'discover_talents' %}">Discover Talents</a></li>
+                        {% endif %}
+                        <li>
+                            <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="logout-button">Logout</button>
+                            </form>
+                        </li>
+                    {% else %}
+                        <li><a href="{% url 'login' %}">Login</a></li>
+                        <li><a href="{% url 'register' %}">Register</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; {% now "Y" %} EA Football Talent. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

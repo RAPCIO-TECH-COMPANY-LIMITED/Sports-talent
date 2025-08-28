@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - EA Football Talent</title>
+    <link rel="stylesheet" href="{% static 'form.css' %}" />
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <a href="{% url 'home' %}" class="logo">EA Football Talent</a>
+            <h1>Sign in</h1>
+            <p>Stay updated on your professional world</p>
+        </div>
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+            
+            {% for field in form %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
+                {{ field.errors }}
+            </div>
+            {% endfor %}
+
+            <a href="#" class="forgot-password">Forgot password?</a>
+
+            <button type="submit" class="submit-btn">Sign in</button>
+        </form>
+
+        <div class="signup-link">
+            <p>New to EA Football Talent? <a href="{% url 'register' %}">Join now</a></p>
+        </div>
+    </div>
+</body>
+</html>
