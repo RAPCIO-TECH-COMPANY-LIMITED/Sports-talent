@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "crested-bloom-449817-m5",
+  "private_key_id": "251ba2cdd0f184231a9e52686af161e8b938e196",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDZPJyNMTWUOHCx\nd2yjdcJsOB+TZNrHaZBze8e7MwXFGtLEpAl7VzA4syygeCD2UDCSOPtNaaAq/vrZ\n4hk4Nvbcwe0IDiEoVrVITuOA4nxwUv6wZjhBcbBRPtvLVVJmHcBE1Hyt9ETEIDHd\ngdQcBlpx0tNkKKVCk9ofpr065NtRYVllf4+BZahLUeIRKtf9xx4sGnAjM0sRv5/i\ncdwZNu526OAkLAbMT1PbZnFfmtiYV38wfbVRkKeJLarapZAFyj627v742E5MZDXn\noDguMoFYKV+Jt9fYnJAtDcPj1X27vI6zgmKP+NSNmDQuv6ISJyKIkhi35GK/GY9W\n2ai4Eo6pAgMBAAECggEAH9/U2KKvyd++KUvslM9ih550g5v4vemvWEKBO+Zwoksd\nQd0Pxxkz6h3gHmuB6qI5fjr+JI2rAqQHCpEyQh1Oe3W44cWw98pBLyrkFrUkrRaA\naEGXX4Le7AzdEyihvnn/DBphcOS2clCHAIlcJgCIpMraWYfdN7eZ+arteQa7Z2Us\nEnkA+nLbO7wqmhty9+ttW9VctuBxE839sF4ET5W7UOf0p3hRmHJOOtiQCbH+XZ8P\nZ0hkD3F2jAEVCDiGL8rA98aFC8zUUaoI4S525j6O/DDGVO+T8QS6bG4F7toH780U\nmJVZjEveq4oEMh2yu3W2nLM0wHD9ieEspWxMDP4rQQKBgQDveLT+WGD6jajrq+FA\nXtfWXkg2fIA/I40TUSN9vdLcFoJ3Cew+XZw1Prkwj4jO4lDUEO3xKHT0kx/FGiOc\nOVLyFUAcSoPz+Fi4zSOuoI9hNzjR4YbRE6rJ9z6Y1y1rEBGLaMDKpQmpBH7Wvw3k\n1JlhulcoWd22ghr0bYYGL/sfJwKBgQDoOwg9J6Noxftt7CeX9QVKKpt5pRI/yLzx\n/TAASM6yXA2p3P3xuteS+VrA9zRTaWwgF6/WRKX5vMXiGL7oE5NkavYa2HMEwEge\nqx3CgZCrjmq8XDbA5YMll/r6ktV4NmV3AF/+Gn9HBoZqvnIkgQ5WQI0cJMuEwsd7\npBVn7Z+FrwKBgQCwR4fcj0xcRDlruqvmyapSuDaqPT3evJnV9W2N21VEBCHn5NsO\nEbSykUibkZ1gxcJASXIOivyFKWRCoHpEPwJrB++Yo9W8mz0cVI4Gt1S0eIUQItcu\nQy7+200uD3/0hvCTUfpRcenJjHCePifJIiMCiLwuDPEjr2SON61oEpvmEwKBgQCo\nxR37s67iGd/bxuAPYxXxDH3pLbnReQU3qBUWX9M3dAbKB7zVzD+WpHj7+6ufYuId\ngJldUo58rF/zLKCw8GkRdVpdsCgGr+a5wwnhrV+CDgIr2ahBD4r76zOOnt9cecvL\nbA5XENKmv2s4cCdruA6/SDJE3ci6NwPaKykTWnGwKQKBgEIXPti4eSyLGuYAwrIh\nLX0tR0rZFXOcfK9PMit6qo2Wp2BoHYWRHu0+GsL37XQWlcohi/K8oGZJymA9/G1Y\nFURGEuf9t+itkjzmlntxxPvDE3brQFOZ3KF204rRTjokHfgwci49ZHwZS78sxEHg\n9JP2ujlgcgP2OqMNnmJaBY96\n-----END PRIVATE KEY-----\n",
+  "client_email": "video-analyzer@crested-bloom-449817-m5.iam.gserviceaccount.com",
+  "client_id": "106300428915502124973",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/video-analyzer%40crested-bloom-449817-m5.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
