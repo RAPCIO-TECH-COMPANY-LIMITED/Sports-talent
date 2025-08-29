@@ -42,6 +42,50 @@
             </div>
         </div>
 
+        <hr style="margin: 40px 0; border: 0; border-top: 1px solid #eee;">
+        <div>
+            <h3>Skill Videos & Analysis</h3>
+            {% for video in player.videos.all %}
+                <div style="margin-bottom: 40px;">
+                    <h4>{{ video.title }}</h4>
+                    <video controls width="100%" preload="metadata" id="video-{{ video.id }}">
+                        <source src="{{ video.video_file.url }}" type="video/mp4">
+                    </video>
+                    
+                    <h5>Key Moments (AI Generated):</h5>
+                    <div class="tags-container">
+                        {% for tag in video.tags.all %}
+                            <a href="#" class="tag" onclick="seekVideo('video-{{ video.id }}', {{ tag.start_time }})">
+                                {{ tag.tag }} at {{ tag.start_time|floatformat:1 }}s
+                            </a>
+                        {% empty %}
+                            <p>AI analysis is in progress. Check back soon!</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% empty %}
+                <p>This player has not uploaded any videos yet.</p>
+            {% endfor %}
+        </div>
+
     </div>
 </div>
+<style>
+    .tags-container a.tag {
+        display: inline-block; padding: 5px 10px; margin: 5px;
+        background: #eef2f9; color: #004080; border-radius: 5px;
+        text-decoration: none; font-size: 0.9em;
+    }
+</style>
+    
+<script>
+    function seekVideo(videoId, time) {
+        event.preventDefault(); // Prevent the link from jumping to the top of the page
+        const videoPlayer = document.getElementById(videoId);
+        if (videoPlayer) {
+            videoPlayer.currentTime = time;
+            videoPlayer.play();
+        }
+    }
+</script>
 {% endblock %}

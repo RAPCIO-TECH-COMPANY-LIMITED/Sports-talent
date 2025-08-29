@@ -38,3 +38,12 @@ class Video(models.Model):
 
     def __str__(self):
         return f"{self.title} by {self.player.user.username}"
+
+class VideoTag(models.Model):
+    video = models.ForeignKey(Video, on_delete=models.CASCADE, related_name='tags')
+    tag = models.CharField(max_length=100)
+    start_time = models.FloatField()
+    end_time = models.FloatField()
+
+    def __str__(self):
+        return f"{self.tag} for {self.video.title}"

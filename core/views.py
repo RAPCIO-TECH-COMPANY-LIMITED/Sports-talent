@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import PlayerSignUpForm, ClubSignUpForm,VideoUploadForm
 from django.contrib.auth.decorators import login_required
 from .models import PlayerProfile
+from .tasks import analyze_video_for_tags
 
 # Create your views here.
 def home(request):
@@ -46,6 +47,8 @@ def upload_video(request):
             # Assign the logged-in player's profile to the video
             video.player = request.user.playerprofile
             video.save()
+            # Trigger the Celery task to analyze the video
+            analyze_video_for_tags.delay(video.id)
             return redirect('player_dashboard')
     else:
         form = VideoUploadForm()
