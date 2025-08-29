@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import CustomUser, PlayerProfile, ClubProfile,Video
+from .models import CustomUser, PlayerProfile, ClubProfile,Video, Subscription
 
 class PlayerSignUpForm(UserCreationForm):
     country = forms.CharField(max_length=100)
@@ -36,11 +36,12 @@ class ClubSignUpForm(UserCreationForm):
         user.user_type = 'club'
         if commit:
             user.save()
-            ClubProfile.objects.create(
+            club_profile = ClubProfile.objects.create(
                 user=user,
                 club_name=self.cleaned_data.get('club_name'),
                 country=self.cleaned_data.get('country'),
             )
+            Subscription.objects.create(club=club_profile, tier='free', is_active=True)
         return user
     
 

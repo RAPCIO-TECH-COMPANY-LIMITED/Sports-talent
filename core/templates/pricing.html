@@ -1,0 +1,404 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Pricing Plans{% endblock %}
+{% block style %}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .pricing-header {
+            text-align: center;
+            margin-bottom: 50px;
+            color: white;
+        }
+
+        .pricing-header h2 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .pricing-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+
+        .pricing-toggle {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 60px;
+            gap: 20px;
+        }
+
+        .toggle-label {
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: opacity 0.3s ease;
+        }
+
+        .toggle-label.monthly {
+            opacity: 1;
+        }
+
+        .toggle-label.yearly {
+            opacity: 0.7;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+            transition: 0.3s;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            border-radius: 50%;
+            transition: 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        input:checked + .slider {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(30px);
+        }
+
+        input:checked ~ .toggle-label.monthly {
+            opacity: 0.7;
+        }
+
+        input:checked ~ .toggle-label.yearly {
+            opacity: 1;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            border: 3px solid transparent;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+        }
+
+        .pricing-card.pro-tier {
+            border-color: #667eea;
+            transform: scale(1.05);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+        }
+
+        .pricing-card.pro-tier:hover {
+            transform: scale(1.05) translateY(-10px);
+        }
+
+        .card-header {
+            margin-bottom: 30px;
+        }
+
+        .card-header h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 12px;
+        }
+
+        .card-header p {
+            color: #718096;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .card-price {
+            margin-bottom: 40px;
+            padding: 20px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .price {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #2d3748;
+            line-height: 1;
+        }
+
+        .term {
+            font-size: 1.1rem;
+            color: #718096;
+            font-weight: 500;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-bottom: 40px;
+            text-align: left;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            font-size: 1rem;
+            color: #4a5568;
+            border-bottom: 1px solid #f7fafc;
+        }
+
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+
+        .icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            margin-right: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .icon-check {
+            background: #48bb78;
+            color: white;
+        }
+
+        .icon-cross {
+            background: #f56565;
+            color: white;
+        }
+
+        .btn {
+            display: inline-block;
+            width: 100%;
+            padding: 16px 32px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #4a5568;
+            border: 2px solid #cbd5e0;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e0;
+            transform: translateY(-2px);
+        }
+
+        /* Animation for price changes */
+        .price {
+            transition: all 0.3s ease;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .pricing-header h2 {
+                font-size: 2.2rem;
+            }
+            
+            .pricing-header p {
+                font-size: 1.1rem;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .pricing-card {
+                padding: 30px 25px;
+            }
+
+            .pricing-card.pro-tier {
+                transform: none;
+            }
+
+            .pricing-card.pro-tier:hover {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Additional hover effects */
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+            border-radius: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .pricing-card:hover::before {
+            opacity: 1;
+        }
+
+        .pricing-card.pro-tier::before {
+            opacity: 1;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="pricing-header">
+            <h2>Find the plan that's right for you.</h2>
+            <p>Choose the plan that's right for your club. Get started for free.</p>
+        </div>
+        
+        <div class="pricing-toggle">
+            <span class="toggle-label monthly">Monthly</span>
+            <label class="toggle-switch">
+                <input type="checkbox" id="pricing-toggle-checkbox">
+                <span class="slider"></span>
+            </label>
+            <span class="toggle-label yearly">Yearly (Save 16%)</span>
+        </div>
+        
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <div class="card-header">
+                    <h3>Free</h3>
+                    <p>For individual scouts getting started.</p>
+                </div>
+                <div class="card-price">
+                    <span class="price">$0</span>
+                    <span class="term">/ month</span>
+                </div>
+                <ul class="feature-list">
+                    <li><span class="icon icon-check">✔</span>Search for Players</li>
+                    <li><span class="icon icon-check">✔</span>View 5 Player Profiles / month</li>
+                    <li><span class="icon icon-cross">✖</span>Watch Skill Videos</li>
+                    <li><span class="icon icon-cross">✖</span>View AI-Generated Key Moments</li>
+                </ul>
+                <a href="#" class="btn btn-secondary">Current Plan</a>
+            </div>
+            
+            <div class="pricing-card pro-tier">
+                <div class="card-header">
+                    <h3>Pro</h3>
+                    <p>The complete toolkit for professional scouting.</p>
+                </div>
+                <div class="card-price">
+                    <span class="price" data-monthly-price="25" data-yearly-price="250">$25</span>
+                    <span class="term">/ month</span>
+                </div>
+                <ul class="feature-list">
+                    <li><span class="icon icon-check">✔</span>Unlimited Player Searches</li>
+                    <li><span class="icon icon-check">✔</span>Unlimited Profile Views</li>
+                    <li><span class="icon icon-check">✔</span>Watch All Skill Videos</li>
+                    <li><span class="icon icon-check">✔</span>View AI-Generated Key Moments</li>
+                    <li><span class="icon icon-check">✔</span>Contact Players (Coming Soon)</li>
+                </ul>
+                <a href="#" class="btn btn-primary">Upgrade to Pro</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const toggle = document.getElementById('pricing-toggle-checkbox');
+        const proPriceEl = document.querySelector('.pro-tier .price');
+        const proTermEl = document.querySelector('.pro-tier .term');
+        const monthlyLabel = document.querySelector('.toggle-label.monthly');
+        const yearlyLabel = document.querySelector('.toggle-label.yearly');
+        
+        toggle.addEventListener('change', () => {
+            if (toggle.checked) { // Yearly is selected
+                proPriceEl.textContent = `$${proPriceEl.dataset.yearlyPrice}`;
+                proTermEl.textContent = '/ year';
+                monthlyLabel.style.opacity = '0.7';
+                yearlyLabel.style.opacity = '1';
+            } else { // Monthly is selected
+                proPriceEl.textContent = `$${proPriceEl.dataset.monthlyPrice}`;
+                proTermEl.textContent = '/ month';
+                monthlyLabel.style.opacity = '1';
+                yearlyLabel.style.opacity = '0.7';
+            }
+        });
+    </script>
+{% endblock %}

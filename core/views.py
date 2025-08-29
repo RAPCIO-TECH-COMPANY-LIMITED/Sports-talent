@@ -3,6 +3,14 @@ from .forms import PlayerSignUpForm, ClubSignUpForm,VideoUploadForm
 from django.contrib.auth.decorators import login_required
 from .models import PlayerProfile
 from .tasks import analyze_video_for_tags
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse
+import json
+from datetime import timedelta
+from .models import ClubProfile, Subscription
+from django.utils import timezone
+
+
 
 # Create your views here.
 def home(request):
@@ -97,15 +105,47 @@ def login_redirect(request):
     
 @login_required
 def player_detail(request, pk):
-    # This view is for clubs to see player details.
-    # You might want to restrict access to only clubs.
     if request.user.user_type != 'club':
         return redirect('home')
 
-    # Fetch the specific player profile using its primary key (pk), or return a 404 error if not found.
+    # This is the robust way to check for an active subscription
+    try:
+        is_subscribed = request.user.clubprofile.subscription.is_active
+    except Subscription.DoesNotExist:
+        is_subscribed = False # If no subscription object exists, they are not subscribed
+    
+    # We will expand this logic to check for 'pro' tier later
+    if not is_subscribed:
+        return redirect('pricing_page')
+
     player_profile = get_object_or_404(PlayerProfile, pk=pk)
     
     context = {
         'player': player_profile
     }
     return render(request, 'player_detail.html', context)
+
+def pricing_page(request):
+    return render(request, 'pricing.html')
+
+
+@csrf_exempt # Required for webhooks from external services
+def flutterwave_webhook(request):
+    if request.method == 'POST':
+        payload = json.loads(request.body)
+        # 1. Verify the webhook is authentic from Flutterwave (they have a process for this)
+        
+        # 2. Check if the payment was successful
+        if payload['status'] == 'successful':
+            # 3. Find the user in your database based on info in the payload
+            club_user_email = payload['customer']['email']
+            club_profile = ClubProfile.objects.get(user__email=club_user_email)
+            
+            # 4. Update their subscription
+            subscription, created = Subscription.objects.get_or_create(club=club_profile)
+            subscription.tier = 'pro'
+            subscription.is_active = True
+            subscription.end_date = timezone.now() + timedelta(days=30) # Grant 30 days of access
+            subscription.save()
+            
+        return HttpResponse(status=200) # Let Flutterwave know you received it

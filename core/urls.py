@@ -1,5 +1,5 @@
 from django.urls import path
-from . views import home,register,upload_video,discover_talents,player_dashboard,login_redirect,player_detail
+from . views import home,register,upload_video,discover_talents,player_dashboard,login_redirect,player_detail,pricing_page
 from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('', home, name='home'),
@@ -16,4 +16,5 @@ urlpatterns = [
     path('redirect/', login_redirect, name='login_redirect'),
     
     path('player/<int:pk>/', player_detail, name='player_detail'),
+    path('pricing/', pricing_page, name='pricing_page'),
     ]
