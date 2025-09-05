@@ -17,6 +17,7 @@ google-cloud-videointelligence==2.16.2
 googleapis-common-protos==1.70.0
 grpcio==1.74.0
 grpcio-status==1.74.0
+gunicorn==23.0.0
 idna==3.10
 kombu==5.5.4
 packaging==25.0
