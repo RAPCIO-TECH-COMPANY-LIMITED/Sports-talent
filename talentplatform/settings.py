@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-zgl!we9$%*#i9@yb2xs*b36_0a=2$iuv53gv8h2afs3nkkb*73
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['sports-talent.onrender.com', '127.0.0.1']
 
 
 # Application definition
