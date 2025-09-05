@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['sports-talent.onrender.com', '127.0.0.1']
 
-
+CSRF_TRUSTED_ORIGINS = ['https://sports-talent.onrender.com/']
 # Application definition
 
 INSTALLED_APPS = [
