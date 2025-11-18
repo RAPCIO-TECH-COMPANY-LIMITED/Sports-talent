@@ -1,51 +1,320 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Upload Video{% endblock %}
+{% block title %}Upload Highlights | EA Talent{% endblock %}
 
 {% block style %}
-    <link rel="stylesheet" href="{% static 'upload.css' %}" />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;0,900;1,900&display=swap" rel="stylesheet">
+<style>
+    /* --- SKY SPORTS THEME VARIABLES --- */
+    :root {
+        --sky-blue: #06163F;
+        --sky-blue-light: #1a2c5e;
+        --sky-red: #CD1316;
+        --sky-gray: #f4f4f4;
+        --text-dark: #111;
+        --white: #ffffff;
+    }
+
+    body {
+        background-color: #eee;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .upload-page-wrapper {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 0 20px;
+    }
+
+    /* --- MAIN CARD --- */
+    .upload-card {
+        background: var(--white);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        /* Sharp Sky Sports Edges */
+        border-radius: 0; 
+        overflow: hidden;
+        position: relative;
+    }
+
+    /* The "Broadcast" Header Strip */
+    .card-header-strip {
+        background: var(--sky-blue);
+        color: white;
+        padding: 25px 30px;
+        border-bottom: 4px solid var(--sky-red);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .card-header-strip h2 {
+        margin: 0;
+        font-size: 1.5rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        font-style: italic;
+    }
+
+    .live-badge {
+        background: var(--sky-red);
+        padding: 5px 10px;
+        font-size: 0.8rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0% { opacity: 1; }
+        50% { opacity: 0.6; }
+        100% { opacity: 1; }
+    }
+
+    .card-body {
+        padding: 40px;
+    }
+
+    /* --- FORM STYLING --- */
+    .form-group {
+        margin-bottom: 30px;
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: 800;
+        color: var(--sky-blue);
+        font-size: 0.9rem;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+    }
+
+    /* Title Input */
+    .sky-input {
+        width: 100%;
+        padding: 15px;
+        font-size: 1.1rem;
+        background: var(--sky-gray);
+        border: 1px solid #ddd;
+        color: var(--text-dark);
+        border-radius: 0;
+        transition: all 0.3s;
+    }
+
+    .sky-input:focus {
+        outline: none;
+        background: white;
+        border-color: var(--sky-blue);
+        border-left: 5px solid var(--sky-red);
+    }
+
+    /* --- DRAG & DROP ZONE --- */
+    .drop-zone {
+        border: 3px dashed #ccc;
+        background-color: #fafafa;
+        padding: 40px 20px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s;
+        position: relative;
+    }
+
+    .drop-zone:hover, .drop-zone.dragover {
+        border-color: var(--sky-red);
+        background-color: #fff5f5; /* Very light red tint */
+    }
+
+    .drop-zone-icon {
+        font-size: 3rem;
+        color: var(--sky-blue);
+        margin-bottom: 15px;
+        display: block;
+    }
+
+    .drop-zone-text {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--sky-blue);
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .drop-zone-sub {
+        font-size: 0.9rem;
+        color: #888;
+    }
+
+    /* Hide the actual ugly file input */
+    .hidden-file-input {
+        display: none; 
+    }
+
+    /* File Name Display (appears after selection) */
+    .selected-file-display {
+        margin-top: 15px;
+        padding: 10px;
+        background: var(--sky-blue);
+        color: white;
+        font-weight: bold;
+        display: none; /* Hidden by default */
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* --- TECHNICAL SPECS SIDEBAR (Visual Only) --- */
+    .tech-specs {
+        background: #f9f9f9;
+        padding: 15px;
+        margin-top: 10px;
+        border-left: 3px solid #ccc;
+        font-size: 0.85rem;
+        color: #666;
+    }
+    
+    .tech-specs strong {
+        color: var(--sky-blue);
+        text-transform: uppercase;
+    }
+
+    /* --- SUBMIT BUTTON --- */
+    .submit-btn {
+        width: 100%;
+        background-color: var(--sky-red);
+        color: white;
+        padding: 18px;
+        font-size: 1.1rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        border: none;
+        cursor: pointer;
+        transition: background 0.3s;
+        margin-top: 10px;
+        letter-spacing: 1px;
+    }
+
+    .submit-btn:hover {
+        background-color: #a00f11;
+    }
+
+    /* Error styling */
+    .errorlist {
+        color: var(--sky-red);
+        list-style: none;
+        padding: 0;
+        margin-top: 5px;
+        font-weight: bold;
+        font-size: 0.9rem;
+    }
+
+</style>
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="upload-container">
-        <h2>Upload Your Skill Video</h2>
-        <p>Showcase your best moments. Keep videos short and high-impact!</p>
-        
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            
-            <div class="form-group">
-                {{ form.title.label_tag }}
-                {{ form.title }}
-                {{ form.title.errors }}
-            </div>
+<div class="upload-page-wrapper">
+    <div class="upload-card">
+        <div class="card-header-strip">
+            <h2>Media Ingest</h2>
+            <span class="live-badge">REC</span>
+        </div>
 
-            <div class="form-group">
-                {{ form.video_file.label_tag }}
-                <div class="file-drop-area">
-                    <span class="file-msg">Click to browse or drag and drop video</span>
-                    <span class="file-msg-light">Maximum file size: 50MB</span>
-                    {{ form.video_file }}
+        <div class="card-body">
+            <p style="margin-bottom: 30px; color: #666;">
+                Upload your best match highlights. High-quality footage increases scout engagement by <strong>40%</strong>.
+            </p>
+
+            <form method="post" enctype="multipart/form-data" id="uploadForm">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="{{ form.title.id_for_label }}">Video Title / Description</label>
+                    {{ form.title }} {{ form.title.errors }}
                 </div>
-                {{ form.video_file.errors }}
-            </div>
 
-            <button type="submit" class="submit-btn">Upload Video</button>
-        </form>
+                <div class="form-group">
+                    <label>Video File Source</label>
+                    
+                    <div class="drop-zone" id="dropZone">
+                        <span class="drop-zone-icon">⇪</span>
+                        <span class="drop-zone-text">DRAG AND DROP FOOTAGE HERE</span>
+                        <span class="drop-zone-sub">or click to browse files</span>
+                        
+                        {{ form.video_file }} 
+                    </div>
+
+                    <div id="fileFeedback" class="selected-file-display">
+                        <span id="fileName">No file selected</span>
+                    </div>
+
+                    {{ form.video_file.errors }}
+
+                    <div class="tech-specs">
+                        <strong>Requirements:</strong> MP4, AVI, or MOV format. Max Size: 50MB.<br>
+                        <strong>Tip:</strong> Landscape (16:9) video is preferred for analysis.
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">PUBLISH TO PROFILE</button>
+            </form>
+        </div>
     </div>
 </div>
 
 <script>
-    const fileInput = document.querySelector('.file-input');
-    const fileMsg = document.querySelector('.file-msg');
+    document.addEventListener('DOMContentLoaded', function() {
+        // 1. Style the Django Title Input
+        const titleInput = document.querySelector('input[name="title"]');
+        if (titleInput) {
+            titleInput.classList.add('sky-input');
+            titleInput.placeholder = "E.g., Season Highlights 2024 - Striker Goals";
+        }
 
-    fileInput.addEventListener('change', () => {
-        if (fileInput.files.length > 0) {
-            fileMsg.textContent = `File selected: ${fileInput.files[0].name}`;
-        } else {
-            fileMsg.textContent = 'Click to browse or drag and drop video';
+        // 2. Handle Drag & Drop Logic
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.querySelector('input[type="file"]'); // Get the Django hidden input
+        const fileFeedback = document.getElementById('fileFeedback');
+        const fileNameDisplay = document.getElementById('fileName');
+
+        // Hide the default Django input visually but keep it functional
+        if (fileInput) {
+            fileInput.classList.add('hidden-file-input');
+        }
+
+        // Click on box triggers file input
+        dropZone.addEventListener('click', () => fileInput.click());
+
+        // Update UI when file is selected via click
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length > 0) {
+                showFile(fileInput.files[0].name);
+            }
+        });
+
+        // Drag Events
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('dragover');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('dragover');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+
+            if (e.dataTransfer.files.length > 0) {
+                fileInput.files = e.dataTransfer.files; // Assign dropped files to input
+                showFile(e.dataTransfer.files[0].name);
+            }
+        });
+
+        function showFile(name) {
+            fileNameDisplay.textContent = "READY TO UPLOAD: " + name;
+            fileFeedback.style.display = 'flex';
+            dropZone.style.borderColor = '#06163F'; // Solid border on success
+            dropZone.style.backgroundColor = '#e6f0ff';
         }
     });
 </script>

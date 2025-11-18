@@ -1,21 +1,233 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Discover Talents{% endblock %}
+{% block title %}Talent Database | EA Sports{% endblock %}
 
 {% block style %}
-    <link rel="stylesheet" href="{% static 'discover.css' %}" />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;0,900;1,900&display=swap" rel="stylesheet">
+<style>
+    /* --- SKY SPORTS THEME --- */
+    :root {
+        --sky-blue: #06163F;
+        --sky-blue-light: #1a2c5e;
+        --sky-red: #CD1316;
+        --sky-red-hover: #a00f11;
+        --sky-gray: #f4f4f4;
+        --text-dark: #111;
+        --white: #ffffff;
+    }
+
+    body {
+        background-color: #eee;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .discover-container {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 0 20px;
+    }
+
+    /* --- HEADER SECTION --- */
+    .page-header {
+        margin-bottom: 30px;
+        border-left: 6px solid var(--sky-red);
+        padding-left: 20px;
+        background: white;
+        padding: 20px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    .page-header h2 {
+        margin: 0;
+        font-size: 2.5rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        color: var(--sky-blue);
+        font-style: italic;
+        line-height: 1;
+    }
+
+    .page-header p {
+        color: #666;
+        margin-top: 10px;
+        font-size: 1.1rem;
+    }
+
+    /* --- CONTROL PANEL (Search Bar) --- */
+    .control-panel {
+        background-color: var(--sky-blue);
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 0; /* Connected to table */
+        border-bottom: 4px solid var(--sky-red);
+    }
+
+    .panel-label {
+        color: white;
+        font-weight: 900;
+        text-transform: uppercase;
+        white-space: nowrap;
+        font-size: 1.1rem;
+    }
+
+    .search-wrapper {
+        flex-grow: 1;
+        position: relative;
+    }
+
+    .search-input {
+        width: 100%;
+        padding: 12px 15px;
+        font-size: 1rem;
+        border: none;
+        background: white;
+        color: var(--text-dark);
+        /* Sharp edges */
+        border-radius: 0; 
+    }
+
+    .search-input:focus {
+        outline: none;
+        background: #fff;
+        box-shadow: inset 0 0 0 2px var(--sky-red);
+    }
+
+    .live-badge {
+        background: var(--sky-red);
+        color: white;
+        padding: 5px 10px;
+        font-weight: bold;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0% { opacity: 1; }
+        50% { opacity: 0.7; }
+        100% { opacity: 1; }
+    }
+
+    /* --- DATA TABLE --- */
+    .table-container {
+        background: white;
+        overflow-x: auto;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    }
+
+    .player-table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 800px; /* Ensures it scrolls on mobile */
+    }
+
+    .player-table thead {
+        background-color: #e0e0e0;
+    }
+
+    .player-table th {
+        text-align: left;
+        padding: 15px 20px;
+        font-size: 0.9rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        color: var(--sky-blue);
+        border-bottom: 2px solid #ccc;
+        cursor: pointer;
+        user-select: none;
+        position: relative;
+        transition: background 0.2s;
+    }
+
+    .player-table th:hover {
+        background-color: #d0d0d0;
+    }
+
+    /* Sort Indicators */
+    .player-table th span::after {
+        content: '⇅';
+        font-size: 1rem;
+        margin-left: 5px;
+        opacity: 0.3;
+    }
+    .player-table th.asc span::after { content: '↑'; opacity: 1; color: var(--sky-red); }
+    .player-table th.desc span::after { content: '↓'; opacity: 1; color: var(--sky-red); }
+
+    .player-table td {
+        padding: 15px 20px;
+        border-bottom: 1px solid #eee;
+        color: #333;
+        font-size: 1rem;
+    }
+
+    .player-table tr:hover td {
+        background-color: #f9f9f9;
+    }
+
+    /* Name Column Styling */
+    .player-name-cell {
+        font-weight: 700;
+        color: var(--sky-blue);
+        text-transform: uppercase;
+    }
+
+    /* --- ACTION BUTTON --- */
+    .btn-view {
+        display: inline-block;
+        padding: 8px 20px;
+        background-color: white;
+        color: var(--sky-blue);
+        border: 2px solid var(--sky-blue);
+        text-decoration: none;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        transition: all 0.2s;
+        white-space: nowrap;
+    }
+
+    .btn-view:hover {
+        background-color: var(--sky-blue);
+        color: white;
+    }
+
+    .empty-state-row td {
+        text-align: center;
+        padding: 40px;
+        color: #777;
+        font-style: italic;
+    }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 768px) {
+        .control-panel {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        .page-header h2 {
+            font-size: 1.8rem;
+        }
+    }
+</style>
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="discover-header">
-        <h2>Discover the Next Generation of Football Stars</h2>
-        <p>Browse profiles from talented players across East Africa.</p>
-        
-        <div class="search-container">
-            <input type="text" id="live-search-input" class="search-input" placeholder="Type to filter players in the table...">
+<div class="discover-container">
+    
+    <div class="page-header">
+        <h2>Talent Database</h2>
+        <p>Live scouting data from East Africa's top emerging players.</p>
+    </div>
+
+    <div class="control-panel">
+        <span class="panel-label">Find Player:</span>
+        <div class="search-wrapper">
+            <input type="text" id="live-search-input" class="search-input" placeholder="Search by Name, Position, or Country...">
         </div>
+        <span class="live-badge">LIVE DATA</span>
     </div>
 
     <div class="table-container">
@@ -26,23 +238,23 @@
                     <th data-column="position" class="sortable">Position <span></span></th>
                     <th data-column="country" class="sortable">Country <span></span></th>
                     <th data-column="age" class="sortable">Age <span></span></th>
-                    <th>Action</th>
+                    <th>Scouting Report</th>
                 </tr>
             </thead>
             <tbody id="player-table-body">
                 {% for player in players %}
                     <tr>
-                        <td>{{ player.user.get_full_name|default:player.user.username }}</td>
-                        <td>{{ player.position }}</td>
+                        <td class="player-name-cell">{{ player.user.get_full_name|default:player.user.username }}</td>
+                        <td><strong>{{ player.position }}</strong></td>
                         <td>{{ player.country }}</td>
-                        <td>{{ player.age|default:'N/A' }}</td>
+                        <td>{{ player.age|default:'-' }}</td>
                         <td>
-                            <a href="{% url 'player_detail' player.pk %}" class="btn-view">View Profile</a>
+                            <a href="{% url 'player_detail' player.pk %}" class="btn-view">View Analysis &rarr;</a>
                         </td>
                     </tr>
                 {% empty %}
                     <tr class="empty-state-row">
-                        <td colspan="5">No players found in the database.</td>
+                        <td colspan="5">No players currently listed in the database.</td>
                     </tr>
                 {% endfor %}
             </tbody>
@@ -105,13 +317,11 @@
             const rowsArray = Array.from(tableRows);
             
             const sortedRows = rowsArray.sort((a, b) => {
-                // Ignore the empty state row during sort
                 if (a.classList.contains('empty-state-row') || b.classList.contains('empty-state-row')) return 0;
                 
                 const aText = a.cells[columnIndex].textContent.trim();
                 const bText = b.cells[columnIndex].textContent.trim();
 
-                // Check if the content is numeric for proper sorting
                 const aVal = isNaN(parseFloat(aText)) ? aText.toLowerCase() : parseFloat(aText);
                 const bVal = isNaN(parseFloat(bText)) ? bText.toLowerCase() : parseFloat(bText);
 

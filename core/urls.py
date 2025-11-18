@@ -16,5 +16,5 @@ urlpatterns = [
     path('redirect/', login_redirect, name='login_redirect'),
     
     path('player/<int:pk>/', player_detail, name='player_detail'),
-    path('pricing/', pricing_page, name='pricing_page'),
+    path('pricing/', pricing_page, name='pricing'),
     ]

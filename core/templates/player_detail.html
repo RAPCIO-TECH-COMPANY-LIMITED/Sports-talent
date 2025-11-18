@@ -1,90 +1,340 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}{{ player.user.get_full_name }}{% endblock %}
+{% block title %}{{ player.user.get_full_name }} | Player Analysis{% endblock %}
 
 {% block style %}
-    {% endblock %}
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;0,900;1,900&display=swap" rel="stylesheet">
+<style>
+    /* --- SKY SPORTS THEME VARIABLES --- */
+    :root {
+        --sky-blue: #06163F;
+        --sky-blue-light: #1a2c5e;
+        --sky-red: #CD1316;
+        --sky-red-hover: #a00f11;
+        --sky-gray: #f4f4f4;
+        --text-dark: #111;
+        --white: #ffffff;
+    }
+
+    body {
+        background-color: #f0f0f0;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .profile-container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding-bottom: 60px;
+    }
+
+    /* --- HERO SECTION --- */
+    .player-hero {
+        background: linear-gradient(135deg, var(--sky-blue) 0%, #000 100%);
+        color: white;
+        padding: 60px 20px;
+        display: flex;
+        align-items: center;
+        gap: 40px;
+        border-bottom: 5px solid var(--sky-red);
+    }
+
+    .hero-avatar {
+        width: 150px;
+        height: 150px;
+        background-color: var(--sky-gray);
+        border: 4px solid white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 4rem;
+        font-weight: 900;
+        color: var(--sky-blue);
+        text-transform: uppercase;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .hero-info h1 {
+        font-size: 3.5rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        margin: 0;
+        line-height: 1;
+        font-style: italic;
+    }
+
+    .hero-badges {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+    .badge {
+        background: var(--sky-red);
+        color: white;
+        padding: 5px 15px;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+    }
+
+    .badge-secondary {
+        background: transparent;
+        border: 1px solid white;
+    }
+
+    /* --- STATS GRID --- */
+    .stats-strip {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        background: white;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        margin-bottom: 40px;
+    }
+
+    .stat-box {
+        padding: 20px;
+        text-align: center;
+        border-right: 1px solid #eee;
+    }
+
+    .stat-box:last-child {
+        border-right: none;
+    }
+
+    .stat-label {
+        display: block;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        color: #666;
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+
+    .stat-value {
+        font-size: 1.5rem;
+        font-weight: 900;
+        color: var(--sky-blue);
+        text-transform: uppercase;
+    }
+
+    /* --- BIO SECTION --- */
+    .content-section {
+        background: white;
+        padding: 40px;
+        margin-bottom: 30px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        color: var(--sky-blue);
+        margin-top: 0;
+        margin-bottom: 20px;
+        border-left: 5px solid var(--sky-red);
+        padding-left: 15px;
+    }
+
+    .bio-text {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        color: #444;
+    }
+
+    /* --- VIDEO CARD & ANALYSIS --- */
+    .video-card {
+        background: white;
+        margin-bottom: 40px;
+        border: 1px solid #ddd;
+        /* Sharp styling */
+        border-radius: 0; 
+    }
+
+    .video-header {
+        background: var(--sky-blue);
+        color: white;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .video-header h4 {
+        margin: 0;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 1.1rem;
+    }
+
+    .video-container {
+        position: relative;
+        background: black;
+    }
+
+    /* --- AI TIMELINE --- */
+    .analysis-panel {
+        padding: 20px;
+        background: #f9f9f9;
+        border-top: 3px solid var(--sky-red);
+    }
+
+    .ai-label {
+        font-weight: 900;
+        color: var(--sky-blue);
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        margin-bottom: 15px;
+        display: block;
+    }
+
+    .timeline-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .time-marker {
+        background: white;
+        border: 1px solid #ccc;
+        padding: 8px 12px;
+        text-decoration: none;
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: var(--text-dark);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.2s;
+        border-left: 3px solid var(--sky-blue);
+    }
+
+    .time-marker:hover {
+        background: var(--sky-blue);
+        color: white;
+        border-left-color: var(--sky-red);
+    }
+
+    .time-stamp {
+        background: #eee;
+        padding: 2px 6px;
+        font-size: 0.75rem;
+        color: #555;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .player-hero {
+            flex-direction: column;
+            text-align: center;
+        }
+        .hero-badges {
+            justify-content: center;
+        }
+        .hero-info h1 {
+            font-size: 2.5rem;
+        }
+        .stats-strip {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+</style>
+{% endblock %}
 
 {% block content %}
-<div class="container" style="padding-top: 40px; padding-bottom: 40px;">
-    <div style="background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+<div class="profile-container">
+    
+    <div class="player-hero">
+        <div class="hero-avatar">
+            {{ player.user.first_name|slice:":1" }}{{ player.user.last_name|slice:":1" }}
+        </div>
         
-        <div style="display: flex; align-items: center; margin-bottom: 30px;">
-            <div style="width: 120px; height: 120px; border-radius: 50%; background-color: #e9ecef; margin-right: 30px;"></div>
-            <div>
-                <h1 style="font-size: 2.5em; margin: 0;">{{ player.user.get_full_name|default:player.user.username }}</h1>
-                <p style="font-size: 1.2em; color: #666; margin: 0;">{{ player.position }} | {{ player.country }} | Born: {{ player.date_of_birth|date:"Y" }}</p>
+        <div class="hero-info">
+            <h1>{{ player.user.get_full_name|default:player.user.username }}</h1>
+            <div class="hero-badges">
+                <span class="badge">{{ player.position }}</span>
+                <span class="badge badge-secondary">{{ player.country }}</span>
             </div>
         </div>
+    </div>
 
-        <div>
-            <h3>About Me</h3>
-            <p>{{ player.bio|default:"This player has not added a bio yet."|linebreaks }}</p>
+    <div class="stats-strip">
+        <div class="stat-box">
+            <span class="stat-label">Position</span>
+            <span class="stat-value">{{ player.position }}</span>
         </div>
-
-        <hr style="margin: 40px 0; border: 0; border-top: 1px solid #eee;">
-
-        <div>
-            <h3>Skill Videos</h3>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
-                {% for video in player.videos.all %}
-                    <div style="border: 1px solid #e9ecef; border-radius: 8px; overflow: hidden;">
-                        <video controls width="100%" preload="metadata">
-                            <source src="{{ video.video_file.url }}" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                        <h4 style="padding: 15px;">{{ video.title }}</h4>
-                    </div>
-                {% empty %}
-                    <p>This player has not uploaded any videos yet.</p>
-                {% endfor %}
-            </div>
+        <div class="stat-box">
+            <span class="stat-label">Nationality</span>
+            <span class="stat-value" style="font-size: 1.2rem;">{{ player.country }}</span>
         </div>
+        <div class="stat-box">
+            <span class="stat-label">Age</span>
+            <span class="stat-value">{{ player.age|default:"N/A" }}</span>
+        </div>
+        <div class="stat-box">
+            <span class="stat-label">Videos</span>
+            <span class="stat-value">{{ player.videos.count }}</span>
+        </div>
+    </div>
 
-        <hr style="margin: 40px 0; border: 0; border-top: 1px solid #eee;">
-        <div>
-            <h3>Skill Videos & Analysis</h3>
-            {% for video in player.videos.all %}
-                <div style="margin-bottom: 40px;">
+    <div class="content-section">
+        <h3 class="section-title">Player Bio</h3>
+        <div class="bio-text">
+            {{ player.bio|default:"No biography available for this player."|linebreaks }}
+        </div>
+    </div>
+
+    <div class="content-section" style="background: transparent; padding: 0; box-shadow: none;">
+        <h3 class="section-title">Performance Analysis</h3>
+        
+        {% for video in player.videos.all %}
+            <div class="video-card">
+                <div class="video-header">
                     <h4>{{ video.title }}</h4>
+                    <span style="font-size: 0.8rem; opacity: 0.8;">UPLOADED: {{ video.uploaded_at|date:"d M Y"|upper }}</span>
+                </div>
+                
+                <div class="video-container">
                     <video controls width="100%" preload="metadata" id="video-{{ video.id }}">
                         <source src="{{ video.video_file.url }}" type="video/mp4">
+                        Your browser does not support the video tag.
                     </video>
-                    
-                    <h5>Key Moments (AI Generated):</h5>
-                    <div class="tags-container">
+                </div>
+
+                <div class="analysis-panel">
+                    <span class="ai-label">AI Key Moments Detected:</span>
+                    <div class="timeline-grid">
                         {% for tag in video.tags.all %}
-                            <a href="#" class="tag" onclick="seekVideo('video-{{ video.id }}', {{ tag.start_time }})">
-                                {{ tag.tag }} at {{ tag.start_time|floatformat:1 }}s
+                            <a href="#" class="time-marker" onclick="seekVideo('video-{{ video.id }}', {{ tag.start_time }})">
+                                <span class="time-stamp">{{ tag.start_time|floatformat:0 }}s</span>
+                                <span>{{ tag.tag }}</span>
                             </a>
                         {% empty %}
-                            <p>AI analysis is in progress. Check back soon!</p>
+                            <p style="color: #666; font-style: italic;">Processing AI analysis...</p>
                         {% endfor %}
                     </div>
                 </div>
-            {% empty %}
-                <p>This player has not uploaded any videos yet.</p>
-            {% endfor %}
-        </div>
-
+            </div>
+        {% empty %}
+            <div class="content-section">
+                <p>No performance data available.</p>
+            </div>
+        {% endfor %}
     </div>
+
 </div>
-<style>
-    .tags-container a.tag {
-        display: inline-block; padding: 5px 10px; margin: 5px;
-        background: #eef2f9; color: #004080; border-radius: 5px;
-        text-decoration: none; font-size: 0.9em;
-    }
-</style>
-    
+
 <script>
     function seekVideo(videoId, time) {
-        event.preventDefault(); // Prevent the link from jumping to the top of the page
+        event.preventDefault(); // Stop page jump
         const videoPlayer = document.getElementById(videoId);
         if (videoPlayer) {
             videoPlayer.currentTime = time;
             videoPlayer.play();
+            
+            // Optional: Smooth scroll to video if it's far up
+            videoPlayer.scrollIntoView({behavior: "smooth", block: "center"});
         }
     }
 </script>

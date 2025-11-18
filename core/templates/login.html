@@ -4,36 +4,249 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - EA Football Talent</title>
-    <link rel="stylesheet" href="{% static 'form.css' %}" />
+    <title>Sign In | EA Football Talent</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;0,900;1,900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- SKY SPORTS THEME VARIABLES --- */
+        :root {
+            --sky-blue: #06163F;
+            --sky-dark: #020c26;
+            --sky-red: #CD1316;
+            --sky-red-hover: #a00f11;
+            --sky-gray: #f4f4f4;
+            --text-dark: #111;
+            --text-light: #666;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--sky-blue);
+            /* Creates that "Stadium Night" gradient look */
+            background: linear-gradient(135deg, var(--sky-blue) 0%, #000000 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* --- LOGIN CARD --- */
+        .login-container {
+            width: 100%;
+            max-width: 420px;
+            background: white;
+            position: relative;
+            padding: 0;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            /* Sky Sports uses sharp corners, no border-radius */
+        }
+
+        /* Top colored bar decoration */
+        .brand-stripe {
+            height: 6px;
+            width: 100%;
+            background: linear-gradient(90deg, var(--sky-blue) 70%, var(--sky-red) 70%);
+        }
+
+        .login-content {
+            padding: 40px;
+        }
+
+        /* --- HEADER SECTION --- */
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            display: inline-block;
+            color: var(--sky-blue);
+            font-weight: 900;
+            font-size: 1.2rem;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        .login-header h1 {
+            margin: 0;
+            color: var(--sky-blue);
+            font-size: 2rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 1;
+        }
+
+        .login-header p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+
+        /* --- FORM STYLING --- */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 700;
+            color: var(--sky-blue);
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        /* Styling Django Input Fields */
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            background-color: var(--sky-gray);
+            outline: none;
+            transition: border-color 0.3s;
+            color: var(--text-dark);
+            /* Sharp edges */
+            border-radius: 0; 
+        }
+
+        .form-group input:focus {
+            border-color: var(--sky-blue);
+            background-color: white;
+            border-left: 4px solid var(--sky-red); /* Sporty focus effect */
+        }
+
+        /* Error styling */
+        .errorlist {
+            list-style: none;
+            padding: 0;
+            margin: 5px 0 0 0;
+            color: var(--sky-red);
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* --- BUTTONS & LINKS --- */
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--sky-red);
+            color: white;
+            border: none;
+            font-size: 1rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.3s;
+            letter-spacing: 0.5px;
+            margin-top: 10px;
+            /* Sharp edges */
+            border-radius: 0;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--sky-red-hover);
+        }
+
+        .forgot-password {
+            display: block;
+            text-align: right;
+            font-size: 0.85rem;
+            color: var(--sky-blue);
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        /* --- FOOTER / SIGNUP --- */
+        .signup-link {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .signup-link a {
+            color: var(--sky-blue);
+            font-weight: 900;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+            color: var(--sky-red);
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 480px) {
+            .login-container {
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+            .brand-stripe {
+                display: none; /* Hide stripe on mobile full screen */
+            }
+        }
+    </style>
 </head>
 <body>
+
     <div class="login-container">
-        <div class="login-header">
-            <a href="{% url 'home' %}" class="logo">EA Football Talent</a>
-            <h1>Sign in</h1>
-            <p>Stay updated on your professional world</p>
-        </div>
+        <div class="brand-stripe"></div>
 
-        <form method="post" novalidate>
-            {% csrf_token %}
-            
-            {% for field in form %}
-            <div class="form-group">
-                {{ field.label_tag }}
-                {{ field }}
-                {{ field.errors }}
+        <div class="login-content">
+            <div class="login-header">
+                <a href="{% url 'home' %}" class="logo">EA Football Talent</a>
+                <h1>Sign In</h1>
+                <p>Access your professional dashboard</p>
             </div>
-            {% endfor %}
 
-            <a href="#" class="forgot-password">Forgot password?</a>
+            <form method="post" novalidate>
+                {% csrf_token %}
+                
+                {% for field in form %}
+                <div class="form-group">
+                    {{ field.label_tag }}
+                    {{ field }}
+                    
+                    {% if field.errors %}
+                        <ul class="errorlist">
+                            {% for error in field.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+                {% endfor %}
 
-            <button type="submit" class="submit-btn">Sign in</button>
-        </form>
+                <a href="#" class="forgot-password">Forgot your password?</a>
 
-        <div class="signup-link">
-            <p>New to EA Football Talent? <a href="{% url 'register' %}">Join now</a></p>
+                <button type="submit" class="submit-btn">Sign In</button>
+            </form>
+
+            <div class="signup-link">
+                <p>Don't have an account? <a href="{% url 'register' %}">Join Free</a></p>
+            </div>
         </div>
     </div>
+
 </body>
 </html>
