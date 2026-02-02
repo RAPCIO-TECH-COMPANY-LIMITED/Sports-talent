@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import PlayerSignUpForm, ClubSignUpForm,VideoUploadForm
+from .forms import PlayerSignUpForm, ClubSignUpForm,VideoUploadForm,AcademySignUpForm
 from django.contrib.auth.decorators import login_required
 from .models import PlayerProfile
 from .tasks import analyze_video_for_tags
@@ -20,28 +20,32 @@ def home(request):
 def register(request):
     player_form = PlayerSignUpForm()
     club_form = ClubSignUpForm()
+    academy_form = AcademySignUpForm()
 
     if request.method == 'POST':
         if 'register_player' in request.POST:
-            # If a player is registering, populate the player_form with POST data
             player_form = PlayerSignUpForm(request.POST)
             if player_form.is_valid():
                 player_form.save()
                 return redirect('login')
-        
+
         elif 'register_club' in request.POST:
-            # If a club is registering, populate the club_form with POST data
             club_form = ClubSignUpForm(request.POST)
             if club_form.is_valid():
                 club_form.save()
                 return redirect('login')
 
-    # The context will now always have valid forms to render
-    context = {
+        elif 'register_academy' in request.POST:
+            academy_form = AcademySignUpForm(request.POST)
+            if academy_form.is_valid():
+                academy_form.save()
+                return redirect('login')
+
+    return render(request, 'register.html', {
         'player_form': player_form,
-        'club_form': club_form
-    }
-    return render(request, 'register.html', context)
+        'club_form': club_form,
+        'academy_form': academy_form
+    })
 
 @login_required
 def upload_video(request):

@@ -4,14 +4,16 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}EA Football Talent{% endblock %}</title>
+    <title>{% block title %}RAPCIO{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'style.css' %}" />
     {% block style %}{% endblock %}
 </head>
 <body>
     <header class="main-header">
         <div class="container">
-            <a href="{% url 'home' %}" class="logo">EA Football Talent</a>
+            <a href="{% url 'home' %}" class="logo">
+                <img src="{% static 'images/logor.jpeg' %}" style="width: 100px;" alt="Talent hub" />
+            </a>
             <nav class="main-nav">
                 <ul>
                     {% if user.is_authenticated %}
