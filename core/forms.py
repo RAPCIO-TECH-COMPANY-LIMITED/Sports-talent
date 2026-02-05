@@ -71,3 +71,37 @@ class VideoUploadForm(forms.ModelForm):
             'title': forms.TextInput(attrs={'placeholder': 'e.g., Best Goals of the Season'}),
         }
 
+class PlayerManagementForm(forms.ModelForm):
+    # Additional Profile Fields
+    country = forms.CharField(max_length=100)
+    position = forms.CharField(max_length=50)
+    date_of_birth = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+
+    class Meta:
+        model = CustomUser
+        # Only personal fields, no username/password
+        fields = ['first_name', 'last_name', 'email']
+
+    @transaction.atomic
+    def save(self, club=None):
+        user = super().save(commit=False)
+
+        # Internal Logic: Auto-generate username and password
+        if not user.pk:  # Only for new users
+            user.username = user.email if user.email else f"player_{uuid.uuid4().hex[:8]}"
+            user.set_unusable_password() # They can't log in unless they reset it
+            user.user_type = 'player'
+
+        user.save()
+
+        # Update or Create the linked Profile
+        PlayerProfile.objects.update_or_create(
+            user=user,
+            defaults={
+                'country': self.cleaned_data.get('country'),
+                'position': self.cleaned_data.get('position'),
+                'date_of_birth': self.cleaned_data.get('date_of_birth'),
+                'club': club
+            }
+        )
+        return user

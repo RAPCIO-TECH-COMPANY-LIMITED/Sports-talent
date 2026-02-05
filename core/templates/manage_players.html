@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Manage Roster | {{ club.club_name }}{% endblock %}
+
+{% block style %}
+<style>
+  :root {
+    --sky-blue: #06163F;
+    --sky-red: #CD1316;
+    --success-green: #28a745;
+  }
+
+  .roster-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+  }
+
+  .roster-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 25px;
+    border-left: 6px solid var(--sky-red);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+  }
+
+  .btn-add {
+    background-color: var(--success-green);
+    color: white;
+    padding: 12px 25px;
+    text-decoration: none;
+    font-weight: 900;
+    text-transform: uppercase;
+    border-radius: 4px;
+    transition: transform 0.2s;
+  }
+
+  .btn-add:hover {
+    transform: scale(1.05);
+    color: white;
+  }
+
+  .action-btn {
+    padding: 5px 12px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-decoration: none;
+    margin-right: 5px;
+    border-radius: 2px;
+  }
+
+  .btn-edit {
+    border: 1px solid var(--sky-blue);
+    color: var(--sky-blue);
+  }
+
+  .btn-delete {
+    border: 1px solid var(--sky-red);
+    color: var(--sky-red);
+  }
+
+  .btn-edit:hover { background: var(--sky-blue); color: white; }
+  .btn-delete:hover { background: var(--sky-red); color: white; }
+
+  .player-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  .player-card {
+    background: white;
+    padding: 20px;
+    border-bottom: 4px solid #ddd;
+    transition: border-color 0.3s;
+  }
+
+  .player-card:hover {
+    border-color: var(--sky-red);
+  }
+
+  .player-meta {
+    margin: 15px 0;
+    font-size: 0.9rem;
+    color: #666;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="roster-container">
+  <div class="roster-header">
+    <div>
+      <h2 style="margin:0; font-weight:900; color:var(--sky-blue);">CLUB ROSTER</h2>
+      <p style="margin:5px 0 0 0;">Managing players for <strong>{{ club.club_name }}</strong></p>
+    </div>
+    <a href="{% url 'add_club_player' %}" class="btn-add">+ Add Player</a>
+  </div>
+
+  <div class="player-card-grid">
+    {% for player in players %}
+    <div class="player-card">
+      <h3 style="margin:0; text-transform:uppercase;">{{ player.user.get_full_name|default:player.user.username }}</h3>
+      <div class="player-meta">
+        <div><strong>Position:</strong> {{ player.position }}</div>
+        <div><strong>Age:</strong> {{ player.age|default:'N/A' }}</div>
+      </div>
+      <div style="margin-top:20px;">
+        <a href="{% url 'edit_club_player' player.pk %}" class="action-btn btn-edit">Edit Info</a>
+        <a href="{% url 'delete_club_player' player.pk %}" class="action-btn btn-delete">Remove</a>
+      </div>
+    </div>
+    {% empty %}
+    <div style="grid-column: 1/-1; text-align:center; padding:50px; background:white;">
+      <p>No players added to your club yet.</p>
+      <a href="{% url 'add_club_player' %}" style="color:var(--sky-red);">Add your first player now &rarr;</a>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import PlayerSignUpForm, ClubSignUpForm,VideoUploadForm,AcademySignUpForm
+from .forms import PlayerSignUpForm, ClubSignUpForm,VideoUploadForm,AcademySignUpForm,PlayerManagementForm
 from django.contrib.auth.decorators import login_required
 from .models import PlayerProfile
 from .tasks import analyze_video_for_tags
@@ -153,3 +153,71 @@ def flutterwave_webhook(request):
             subscription.save()
             
         return HttpResponse(status=200) # Let Flutterwave know you received it
+
+@login_required
+def manage_club_players(request):
+    """Displays only players belonging to the logged-in club."""
+    if request.user.user_type != 'club':
+        return redirect('home')
+
+    club_profile = get_object_or_404(ClubProfile, user=request.user)
+    # Filter players by the club assigned to their profile
+    players = PlayerProfile.objects.filter(club=club_profile)
+
+    return render(request, 'manage_players.html', {
+        'players': players,
+        'club': club_profile
+    })
+
+@login_required
+def add_club_player(request):
+    """Allows a club to register a new player to their roster."""
+    if request.user.user_type != 'club':
+        return redirect('home')
+
+    club_profile = request.user.clubprofile
+
+    if request.method == 'POST':
+        # Pass the club_profile to the form to handle internal assignment
+        form = PlayerManagementForm(request.POST)
+        if form.is_valid():
+            player_user = form.save(club=club_profile)
+            return redirect('manage_club_players')
+    else:
+        form = PlayerManagementForm()
+
+    return render(request, 'player_form.html', {'form': form, 'title': 'Add New Player'})
+
+@login_required
+def edit_club_player(request, pk):
+    """Update existing player details."""
+    player_profile = get_object_or_404(PlayerProfile, pk=pk, club=request.user.clubprofile)
+    # Get the associated user for the form
+    player_user = player_profile.user
+
+    if request.method == 'POST':
+        # Using the custom form to update existing user/profile
+        form = PlayerManagementForm(request.POST, instance=player_user)
+        if form.is_valid():
+            form.save(club=request.user.clubprofile)
+            return redirect('manage_club_players')
+    else:
+        # Pre-populate with user and profile data
+        initial_data = {
+            'country': player_profile.country,
+            'position': player_profile.position,
+            'date_of_birth': player_profile.date_of_birth,
+        }
+        form = PlayerManagementForm(instance=player_user, initial=initial_data)
+
+    return render(request, 'player_form.html', {'form': form, 'title': 'Update Player'})
+
+@login_required
+def delete_club_player(request, pk):
+    """Remove a player from the club roster."""
+    player = get_object_or_404(PlayerProfile, pk=pk, club=request.user.clubprofile)
+    if request.method == 'POST':
+        # Note: This deletes the CustomUser, which cascades to the PlayerProfile
+        player.user.delete()
+        return redirect('manage_club_players')
+    return render(request, 'confirm_delete.html', {'player': player})
