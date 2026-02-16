@@ -27,6 +27,7 @@ class ClubProfile(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key=True)
     club_name = models.CharField(max_length=200)
     country = models.CharField(max_length=100)
+    region = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
 
     def __str__(self):

@@ -1,21 +1,17 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import PlayerSignUpForm, ClubSignUpForm,VideoUploadForm,AcademySignUpForm,PlayerManagementForm
+from .forms import PlayerSignUpForm, ClubSignUpForm, VideoUploadForm, AcademySignUpForm, PlayerManagementForm
 from django.contrib.auth.decorators import login_required
-from .models import PlayerProfile
+from .models import PlayerProfile, ClubProfile, Subscription, AcademyProfile
 from .tasks import analyze_video_for_tags
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 import json
 from datetime import timedelta
-from .models import ClubProfile, Subscription
 from django.utils import timezone
 
 
-
-# Create your views here.
 def home(request):
     return render(request, 'index.html')
-
 
 def register(request):
     player_form = PlayerSignUpForm()
@@ -28,13 +24,11 @@ def register(request):
             if player_form.is_valid():
                 player_form.save()
                 return redirect('login')
-
         elif 'register_club' in request.POST:
             club_form = ClubSignUpForm(request.POST)
             if club_form.is_valid():
                 club_form.save()
                 return redirect('login')
-
         elif 'register_academy' in request.POST:
             academy_form = AcademySignUpForm(request.POST)
             if academy_form.is_valid():
@@ -51,158 +45,171 @@ def register(request):
 def upload_video(request):
     if request.user.user_type != 'player':
         return redirect('home')
-
     if request.method == 'POST':
         form = VideoUploadForm(request.POST, request.FILES)
         if form.is_valid():
             video = form.save(commit=False)
-            # Assign the logged-in player's profile to the video
             video.player = request.user.playerprofile
             video.save()
-            # Trigger the Celery task to analyze the video
             analyze_video_for_tags.delay(video.id)
             return redirect('player_dashboard')
     else:
         form = VideoUploadForm()
-    
     return render(request, 'upload_video.html', {'form': form})
 
-@login_required
+# GLOBAL VIEW: Visible to all (but actions may restrict)
 def discover_talents(request):
-    if request.user.user_type != 'club':
-        return redirect('home')
+    # Fetch ALL players for the public directory
+    players = PlayerProfile.objects.all().select_related('user', 'club', 'academy')
 
-    # Get all player profiles
-    players = PlayerProfile.objects.all()
+    # Filter lists
+    positions = PlayerProfile.objects.values_list('position', flat=True).distinct().order_by('position')
+    clubs = ClubProfile.objects.values_list('club_name', flat=True).distinct()
+    academies = AcademyProfile.objects.values_list('academy_name', flat=True).distinct()
+    affiliations = sorted(list(clubs) + list(academies))
+
     context = {
-        'players': players
+        'players': players,
+        'positions': positions,
+        'affiliations': affiliations,
     }
     return render(request, 'discover_talents.html', context)
 
 @login_required
 def player_dashboard(request):
-    # Ensure the user is a player
     if request.user.user_type != 'player':
-        return redirect('home') # Or an error page
-
+        return redirect('home')
     profile = PlayerProfile.objects.get(user=request.user)
-    videos = profile.videos.all() # Get all videos related to this player's profile
-
-    context = {
-        'profile': profile,
-        'videos': videos
-    }
+    videos = profile.videos.all()
+    context = {'profile': profile, 'videos': videos}
     return render(request, 'player_dashboard.html', context)
 
 @login_required
 def login_redirect(request):
-    """
-    Redirects users to their respective dashboards based on their user_type.
-    """
     if request.user.user_type == 'player':
         return redirect('player_dashboard')
-    elif request.user.user_type == 'club':
-        return redirect('discover_talents')
+    elif request.user.user_type in ['club', 'academy']:
+        return redirect('manage_roster')
     else:
-        # Fallback for any other user type or unexpected case
-        return redirect('home')
-    
-@login_required
-def player_detail(request, pk):
-    if request.user.user_type != 'club':
         return redirect('home')
 
-    # This is the robust way to check for an active subscription
-    try:
-        is_subscribed = request.user.clubprofile.subscription.is_active
-    except Subscription.DoesNotExist:
-        is_subscribed = False # If no subscription object exists, they are not subscribed
-    
-    # We will expand this logic to check for 'pro' tier later
+@login_required
+def player_detail(request, pk):
+    # Security check: Only clubs/academies can view details
+    if request.user.user_type not in ['club', 'academy']:
+        return redirect('home')
+
+    # Subscription Logic
+    is_subscribed = False
+    if request.user.user_type == 'club':
+        try:
+            is_subscribed = request.user.clubprofile.subscription.is_active
+        except (ClubProfile.DoesNotExist, Subscription.DoesNotExist):
+            is_subscribed = False
+    elif request.user.user_type == 'academy':
+        # Academies might have free access or different logic
+        is_subscribed = True
+
     if not is_subscribed:
         return redirect('pricing_page')
 
     player_profile = get_object_or_404(PlayerProfile, pk=pk)
-    
-    context = {
-        'player': player_profile
-    }
+    context = {'player': player_profile}
     return render(request, 'player_detail.html', context)
 
 def pricing_page(request):
     return render(request, 'pricing.html')
 
-
-@csrf_exempt # Required for webhooks from external services
+@csrf_exempt
 def flutterwave_webhook(request):
     if request.method == 'POST':
         payload = json.loads(request.body)
-        # 1. Verify the webhook is authentic from Flutterwave (they have a process for this)
-        
-        # 2. Check if the payment was successful
         if payload['status'] == 'successful':
-            # 3. Find the user in your database based on info in the payload
             club_user_email = payload['customer']['email']
             club_profile = ClubProfile.objects.get(user__email=club_user_email)
-            
-            # 4. Update their subscription
             subscription, created = Subscription.objects.get_or_create(club=club_profile)
             subscription.tier = 'pro'
             subscription.is_active = True
-            subscription.end_date = timezone.now() + timedelta(days=30) # Grant 30 days of access
+            subscription.end_date = timezone.now() + timedelta(days=30)
             subscription.save()
-            
-        return HttpResponse(status=200) # Let Flutterwave know you received it
+    return HttpResponse(status=200)
+
 
 @login_required
-def manage_club_players(request):
-    """Displays only players belonging to the logged-in club."""
-    if request.user.user_type != 'club':
+def manage_roster(request):
+    """
+    Displays ONLY players belonging to the logged-in club or academy.
+    This supports the separate template for management.
+    """
+    if request.user.user_type not in ['club', 'academy']:
         return redirect('home')
 
-    club_profile = get_object_or_404(ClubProfile, user=request.user)
-    # Filter players by the club assigned to their profile
-    players = PlayerProfile.objects.filter(club=club_profile)
+    players = []
+    org_name = ""
+
+    # Determine organization type and filter players strictly by that relation
+    if request.user.user_type == 'club':
+        profile = get_object_or_404(ClubProfile, user=request.user)
+        players = PlayerProfile.objects.filter(club=profile).select_related('user')
+        org_name = profile.club_name
+    elif request.user.user_type == 'academy':
+        profile = get_object_or_404(AcademyProfile, user=request.user)
+        players = PlayerProfile.objects.filter(academy=profile).select_related('user')
+        org_name = profile.academy_name
+
+    # Helper for the dropdown filter in the management view
+    positions = players.values_list('position', flat=True).distinct().order_by('position')
 
     return render(request, 'manage_players.html', {
         'players': players,
-        'club': club_profile
+        'org_name': org_name,
+        'positions': positions
     })
 
 @login_required
-def add_club_player(request):
-    """Allows a club to register a new player to their roster."""
-    if request.user.user_type != 'club':
+def add_roster_player(request):
+    """Allows a club/academy to register a new player specifically to their roster."""
+    if request.user.user_type not in ['club', 'academy']:
         return redirect('home')
 
-    club_profile = request.user.clubprofile
-
     if request.method == 'POST':
-        # Pass the club_profile to the form to handle internal assignment
         form = PlayerManagementForm(request.POST)
         if form.is_valid():
-            player_user = form.save(club=club_profile)
-            return redirect('manage_club_players')
+            # Pass the correct affiliation based on user type
+            if request.user.user_type == 'club':
+                form.save(club=request.user.clubprofile)
+            else:
+                form.save(academy=request.user.academyprofile)
+            return redirect('manage_roster')
     else:
         form = PlayerManagementForm()
 
     return render(request, 'player_form.html', {'form': form, 'title': 'Add New Player'})
 
 @login_required
-def edit_club_player(request, pk):
-    """Update existing player details."""
-    player_profile = get_object_or_404(PlayerProfile, pk=pk, club=request.user.clubprofile)
-    # Get the associated user for the form
+def edit_roster_player(request, pk):
+    """Update existing player details. Securely checks ownership."""
+    # 1. Fetch player ensuring they belong to the requestor
+    if request.user.user_type == 'club':
+        profile = request.user.clubprofile
+        player_profile = get_object_or_404(PlayerProfile, pk=pk, club=profile)
+    elif request.user.user_type == 'academy':
+        profile = request.user.academyprofile
+        player_profile = get_object_or_404(PlayerProfile, pk=pk, academy=profile)
+    else:
+        return redirect('home')
+
     player_user = player_profile.user
 
     if request.method == 'POST':
-        # Using the custom form to update existing user/profile
         form = PlayerManagementForm(request.POST, instance=player_user)
         if form.is_valid():
-            form.save(club=request.user.clubprofile)
-            return redirect('manage_club_players')
+            if request.user.user_type == 'club':
+                form.save(club=profile)
+            else:
+                form.save(academy=profile)
+            return redirect('manage_roster')
     else:
-        # Pre-populate with user and profile data
         initial_data = {
             'country': player_profile.country,
             'position': player_profile.position,
@@ -213,11 +220,21 @@ def edit_club_player(request, pk):
     return render(request, 'player_form.html', {'form': form, 'title': 'Update Player'})
 
 @login_required
-def delete_club_player(request, pk):
-    """Remove a player from the club roster."""
-    player = get_object_or_404(PlayerProfile, pk=pk, club=request.user.clubprofile)
+def delete_roster_player(request, pk):
+    """Remove a player from the roster."""
+    if request.user.user_type == 'club':
+        player = get_object_or_404(PlayerProfile, pk=pk, club=request.user.clubprofile)
+    elif request.user.user_type == 'academy':
+        player = get_object_or_404(PlayerProfile, pk=pk, academy=request.user.academyprofile)
+    else:
+        return redirect('home')
+
     if request.method == 'POST':
-        # Note: This deletes the CustomUser, which cascades to the PlayerProfile
         player.user.delete()
-        return redirect('manage_club_players')
+        return redirect('manage_roster')
     return render(request, 'confirm_delete.html', {'player': player})
+
+# @login_required
+def ai_tools(request):
+    """Renders the AI Performance Center powered by Gemini."""
+    return render(request, 'ai_tools.html')

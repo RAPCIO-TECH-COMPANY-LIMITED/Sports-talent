@@ -1,12 +1,43 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import CustomUser, PlayerProfile, ClubProfile,Video, Subscription,AcademyProfile
+from .models import CustomUser, PlayerProfile, ClubProfile, Video, Subscription, AcademyProfile
 from django.db import transaction
+import uuid
 
+class UserRegistrationForm(UserCreationForm):
+    user_type = forms.ChoiceField(choices=CustomUser.USER_TYPE_CHOICES, required=True)
+    country = forms.CharField(max_length=100, required=False)
+    first_name = forms.CharField(max_length=100, required=False)
+    last_name = forms.CharField(max_length=100, required=False)
+    date_of_birth = forms.DateField(widget=forms.SelectDateWidget(), required=False)
+
+    class Meta(UserCreationForm.Meta):
+        model = CustomUser
+        fields = UserCreationForm.Meta.fields + ('email', 'user_type')
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.user_type = self.cleaned_data.get('user_type')
+        if commit:
+            user.save()
+            user_type = self.cleaned_data.get('user_type')
+            if user_type == 'player':
+                PlayerProfile.objects.create(
+                    user=user,
+                    country=self.cleaned_data.get('country'),
+                    date_of_birth=self.cleaned_data.get('date_of_birth') or '2000-01-01'
+                )
+            elif user_type == 'club':
+                ClubProfile.objects.create(user=user, club_name=user.username)
+            elif user_type == 'academy':
+                AcademyProfile.objects.create(user=user, academy_name=user.username)
+        return user
 
 class PlayerSignUpForm(UserCreationForm):
     country = forms.CharField(max_length=100)
     position = forms.CharField(max_length=50)
+    first_name = forms.CharField(max_length=100)
+    last_name = forms.CharField(max_length=100)
     date_of_birth = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
 
     class Meta(UserCreationForm.Meta):
@@ -20,6 +51,8 @@ class PlayerSignUpForm(UserCreationForm):
         PlayerProfile.objects.create(
             user=user,
             country=self.cleaned_data.get('country'),
+            first_name=self.cleaned_data.get('first_name'),
+            last_name=self.cleaned_data.get('last_name'),
             position=self.cleaned_data.get('position'),
             date_of_birth=self.cleaned_data.get('date_of_birth')
         )
@@ -27,6 +60,7 @@ class PlayerSignUpForm(UserCreationForm):
 
 class ClubSignUpForm(UserCreationForm):
     club_name = forms.CharField(max_length=200)
+    region = forms.CharField(max_length=100)
     country = forms.CharField(max_length=100)
 
     class Meta(UserCreationForm.Meta):
@@ -40,6 +74,7 @@ class ClubSignUpForm(UserCreationForm):
         ClubProfile.objects.create(
             user=user,
             club_name=self.cleaned_data.get('club_name'),
+            region=self.cleaned_data.get('region'),
             country=self.cleaned_data.get('country')
         )
         return user
@@ -72,36 +107,39 @@ class VideoUploadForm(forms.ModelForm):
         }
 
 class PlayerManagementForm(forms.ModelForm):
-    # Additional Profile Fields
     country = forms.CharField(max_length=100)
     position = forms.CharField(max_length=50)
     date_of_birth = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
 
     class Meta:
         model = CustomUser
-        # Only personal fields, no username/password
         fields = ['first_name', 'last_name', 'email']
 
     @transaction.atomic
-    def save(self, club=None):
+    def save(self, club=None, academy=None):
         user = super().save(commit=False)
 
-        # Internal Logic: Auto-generate username and password
-        if not user.pk:  # Only for new users
+        if not user.pk:
             user.username = user.email if user.email else f"player_{uuid.uuid4().hex[:8]}"
-            user.set_unusable_password() # They can't log in unless they reset it
+            user.set_unusable_password()
             user.user_type = 'player'
 
         user.save()
 
-        # Update or Create the linked Profile
+        defaults = {
+            'country': self.cleaned_data.get('country'),
+            'position': self.cleaned_data.get('position'),
+            'date_of_birth': self.cleaned_data.get('date_of_birth'),
+        }
+
+        # Assign affiliation based on what was passed
+        if club:
+            defaults['club'] = club
+        if academy:
+            defaults['academy'] = academy
+
         PlayerProfile.objects.update_or_create(
             user=user,
-            defaults={
-                'country': self.cleaned_data.get('country'),
-                'position': self.cleaned_data.get('position'),
-                'date_of_birth': self.cleaned_data.get('date_of_birth'),
-                'club': club
-            }
+            defaults=defaults
         )
         return user

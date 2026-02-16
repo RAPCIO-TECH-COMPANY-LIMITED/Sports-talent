@@ -8,16 +8,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;0,900;1,900&display=swap" rel="stylesheet">
 
     <style>
-        /* Keep your existing CSS variables and base styles */
+        /* --- UPDATED THEME (PURPLE) --- */
         :root {
-            --sky-blue: #06163F;
-            --sky-blue-light: #1a2c5e;
-            --sky-red: #CD1316;
-            --sky-red-hover: #a00f11;
-            --sky-gray: #f4f4f4;
+            --navy-blue: #06163F;
+            --purple-main: #6f42c1;  /* Replaces Sky Red */
+            --purple-dark: #4e2a8f;
+            --light-gray: #f4f4f4;
             --text-dark: #111;
             --text-light: #666;
             --white: #ffffff;
+            --error-red: #dc3545;     /* Keep errors distinct */
         }
 
         * { box-sizing: border-box; }
@@ -25,27 +25,30 @@
         body {
             margin: 0; padding: 0;
             font-family: 'Roboto', sans-serif;
-            background: linear-gradient(135deg, var(--sky-blue) 0%, #000000 100%);
+            /* Updated Gradient to match Index Page */
+            background: linear-gradient(135deg, #2c0b55 0%, #000000 100%);
             min-height: 100vh;
             display: flex; justify-content: center; align-items: center;
             padding: 20px;
         }
 
         .register-container {
-            display: flex; width: 100%; max-width: 1000px; /* Slightly wider for 3 forms */
+            display: flex; width: 100%; max-width: 1000px;
             background: var(--white); box-shadow: 0 20px 50px rgba(0,0,0,0.5);
             overflow: hidden;
+            border-radius: 8px; /* Added slight rounding */
         }
 
         .promo-panel {
-            flex: 0.8; background-color: var(--sky-blue); color: white;
+            flex: 0.8; background-color: var(--navy-blue); color: white;
             padding: 50px 40px; display: flex; flex-direction: column;
             justify-content: center; position: relative;
         }
 
+        /* Top accent bar changed to Purple */
         .promo-panel::before {
             content: ''; position: absolute; top: 0; left: 0;
-            width: 100%; height: 6px; background: var(--sky-red);
+            width: 100%; height: 6px; background: var(--purple-main);
         }
 
         .form-panel { flex: 1.5; background: var(--white); display: flex; flex-direction: column; }
@@ -58,7 +61,13 @@
             text-transform: uppercase; color: var(--text-light); cursor: pointer;
             border-top: 4px solid transparent; transition: all 0.3s ease; font-size: 0.8rem;
         }
-        .tab-button.active { background: var(--white); color: var(--sky-blue); border-top: 4px solid var(--sky-red); }
+
+        /* Active Tab Accent changed to Purple */
+        .tab-button.active {
+            background: var(--white);
+            color: var(--navy-blue);
+            border-top: 4px solid var(--purple-main);
+        }
 
         /* FORM SECTIONS */
         .form-section { display: none; padding: 40px; animation: fadeIn 0.4s ease; }
@@ -68,16 +77,47 @@
 
         /* INPUTS */
         .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; font-weight: 700; color: var(--sky-blue); font-size: 0.75rem; margin-bottom: 5px; text-transform: uppercase; }
+        .form-group label { display: block; font-weight: 700; color: var(--navy-blue); font-size: 0.75rem; margin-bottom: 5px; text-transform: uppercase; }
         .form-group input, .form-group select, .form-group textarea {
-            width: 100%; padding: 10px; border: 1px solid #ccc; background-color: var(--sky-gray); border-radius: 0;
+            width: 100%; padding: 10px; border: 1px solid #ccc; background-color: var(--light-gray); border-radius: 4px;
         }
+
+        /* Focus state for inputs */
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--purple-main);
+            background-color: white;
+        }
+
+        /* Submit Button changed to Purple */
         .submit-btn {
-            width: 100%; padding: 15px; background-color: var(--sky-red); color: white;
+            width: 100%; padding: 15px;
+            background-color: var(--purple-main);
+            color: white;
             border: none; font-weight: 900; text-transform: uppercase; cursor: pointer; margin-top: 10px;
+            border-radius: 4px;
+            transition: background 0.3s;
         }
+
+        .submit-btn:hover {
+            background-color: var(--purple-dark);
+        }
+
         .login-link { text-align: center; padding: 20px; background-color: #f9f9f9; border-top: 1px solid #eee; font-size: 0.9rem; }
-        .errorlist { color: var(--sky-red); font-size: 0.8rem; list-style: none; padding: 0; font-weight: bold; }
+        .errorlist { color: var(--error-red); font-size: 0.8rem; list-style: none; padding: 0; font-weight: bold; }
+
+        /* Badge on left panel */
+        .badge {
+            background-color: var(--purple-main);
+            color: white;
+            padding: 5px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            display: inline-block;
+            border-radius: 2px;
+        }
     </style>
 </head>
 <body>
@@ -144,7 +184,7 @@
         </div>
 
         <div class="login-link">
-            <p>Already have an account? <a href="{% url 'login' %}" style="color: var(--sky-blue); font-weight:900; text-decoration:none;">SIGN IN</a></p>
+            <p>Already have an account? <a href="{% url 'login' %}" style="color: var(--purple-main); font-weight:900; text-decoration:none;">SIGN IN</a></p>
         </div>
     </div>
 </div>

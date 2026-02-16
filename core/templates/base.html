@@ -20,7 +20,9 @@
                         {% if user.user_type == 'player' %}
                             <li><a href="{% url 'player_dashboard' %}">My Dashboard</a></li>
                         {% elif user.user_type == 'club' %}
-                            <li><a href="{% url 'discover_talents' %}">Discover Talents</a></li>
+                            <li><a href="{% url 'manage_roster' %}">Manage Players</a></li>
+                        {% elif user.user_type == 'academy' %}
+                            <li><a href="{% url 'manage_roster' %}">Manage Players</a></li>
                         {% endif %}
                         <li>
                             <form action="{% url 'logout' %}" method="post" style="display: inline;">
@@ -29,6 +31,7 @@
                             </form>
                         </li>
                     {% else %}
+                        <li><a href="{% url 'discover_talents' %}">Discover Talents</a></li>
                         <li><a href="{% url 'login' %}">Login</a></li>
                         <li><a href="{% url 'register' %}">Register</a></li>
                         <li><a href="{% url 'pricing' %}">Pricing</a></li>

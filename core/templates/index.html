@@ -7,14 +7,54 @@
     <div class="hero-overlay"></div>
     <div class="container hero-content">
         <span class="breaking-badge">NEW SPORTS ERA</span>
-        <h1 class="hero-title">YOUR JOURNEY TO PROFESSIONAL FOOTBALL STARTS HERE</h1>
+        <h1 class="hero-title">DIGITIZE. MANAGE. DISCOVER.</h1>
         <p class="hero-subtitle">
-            The #1 platform connecting talented footballers in Uganda, Kenya, and Tanzania with clubs and scouts. 
-            Get discovered by top teams across East Africa.
+            The #1 platform for Clubs and Academies to register, manage, and showcase their players using innovative QR technology. Connecting East African talent to the world.
         </p>
         <div class="hero-actions">
-            <a href="{% url 'register' %}" class="btn btn-sky-primary">GET STARTED FREE</a>
-            <a href="#how-it-works" class="btn btn-sky-outline">HOW IT WORKS</a>
+            <a href="{% url 'register' %}" class="btn btn-purple-primary">REGISTER YOUR CLUB</a>
+            <a href="#how-it-works" class="btn btn-outline">HOW IT WORKS</a>
+        </div>
+    </div>
+</section>
+
+<!-- CORPORATE IDENTITY SECTION (Mission/Vision/Values) -->
+<section id="about" class="corporate-identity">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">WHO WE ARE</h2>
+            <div class="section-line"></div>
+        </div>
+
+        <div class="identity-grid">
+            <!-- MISSION -->
+            <div class="identity-card">
+                <div class="icon-box"></div>
+                <h3>OUR MISSION</h3>
+                <p>
+                    We aim at elevating and outlining initiatives to promote fair play and integrity in football through the use of QR code technology.
+                </p>
+            </div>
+
+            <!-- VISION -->
+            <div class="identity-card featured-card">
+                <div class="icon-box"></div>
+                <h3>OUR VISION</h3>
+                <p>
+                    To be the leading platform at revolutionizing the sports sector through fair play.
+                </p>
+            </div>
+
+            <!-- CORE VALUES -->
+            <div class="identity-card">
+                <div class="icon-box"></div>
+                <h3>CORE VALUES</h3>
+                <ul class="values-list">
+                    <li><strong>Integrity:</strong> Honesty in every match and transaction.</li>
+                    <li><strong>Fairness:</strong> Equal opportunity for all players.</li>
+                    <li><strong>Discipline:</strong> Respect in the sports community and for each other.</li>
+                </ul>
+            </div>
         </div>
     </div>
 </section>
@@ -22,11 +62,44 @@
 <section class="features">
     <div class="container">
         <div class="section-header">
-            <h2 class="section-title">WHY CHOOSE US</h2>
+            <h2 class="section-title">PLATFORM FEATURES</h2>
             <div class="section-line"></div>
         </div>
-        
+
         <div class="cards">
+
+            <!-- FEATURE 1: FOR CLUBS (Primary Focus) -->
+            <div class="sky-card" style="border-top: 5px solid var(--purple-main);">
+                <div class="card-body">
+                    <h3>FOR CLUBS & ACADEMIES</h3>
+                    <p class="highlight-text">Manage Your Roster</p>
+                    <p>The ultimate management tool. Register your players, maintain their profiles, update stats, and assert ownership. Professionalize your academy today.</p>
+                    <ul class="feature-list">
+                        <li>Register & Edit Players</li>
+                        <li>Digital Roster Management</li>
+                        <li>Verified Ownership Status</li>
+                    </ul>
+                    <a href="{% url 'register' %}" class="btn btn-purple-primary" style="width:100%; text-align:center; box-sizing:border-box;">MANAGE SQUAD</a>
+                </div>
+            </div>
+
+            <!-- FEATURE 2: AI TOOLS -->
+            <div class="sky-card">
+                <div class="card-top-border"></div>
+                <div class="card-body">
+                    <h3>✨ AI PERFORMANCE</h3>
+                    <p class="highlight-text">Powered by Gemini AI</p>
+                    <p>Unlock professional-grade tools. Generate pro player bios, structured scout reports, and personalized training drills instantly.</p>
+                    <ul class="feature-list">
+                        <li>Smart Bio Generator</li>
+                        <li>AI Scout Reports</li>
+                        <li>Drill Recommender</li>
+                    </ul>
+                    <a href="{% url 'ai_tools' %}" class="text-link">Try AI Tools &rarr;</a>
+                </div>
+            </div>
+
+            <!-- FEATURE 3: FOR PLAYERS -->
             <div class="sky-card">
                 <div class="card-top-border"></div>
                 <div class="card-body">
@@ -36,12 +109,13 @@
                     <ul class="feature-list">
                         <li>Unlimited video uploads</li>
                         <li>Direct scout messaging</li>
-                        <li>Performance analytics</li>
+                        <li>QR Code Identity</li>
                     </ul>
                     <a href="{% url 'register' %}" class="text-link">Create Profile &rarr;</a>
                 </div>
             </div>
 
+            <!-- FEATURE 4: FOR SCOUTS -->
             <div class="sky-card">
                 <div class="card-top-border"></div>
                 <div class="card-body">
@@ -57,20 +131,6 @@
                 </div>
             </div>
 
-            <div class="sky-card">
-                <div class="card-top-border"></div>
-                <div class="card-body">
-                    <h3>THE PLATFORM</h3>
-                    <p class="highlight-text">Direct & Simple</p>
-                    <p>No middlemen. We create a direct connection between talent and opportunity, making dreams accessible.</p>
-                    <ul class="feature-list">
-                        <li>Mobile-friendly</li>
-                        <li>Verified profiles</li>
-                        <li>Real-time alerts</li>
-                    </ul>
-                    <a href="#about" class="text-link">Read Our Story &rarr;</a>
-                </div>
-            </div>
         </div>
     </div>
 </section>
@@ -78,63 +138,29 @@
 <section id="how-it-works" class="how-it-works">
     <div class="container">
         <div class="section-header">
-            <h2 class="section-title">THE PROCESS</h2>
+            <h2 class="section-title">HOW IT WORKS</h2>
             <div class="section-line"></div>
         </div>
         <div class="steps-grid">
             <div class="step-item">
                 <span class="step-num">01</span>
-                <h4>Sign Up</h4>
-                <p>Create your free account as a player or scout in minutes.</p>
+                <h4>Register Club</h4>
+                <p>Create your Academy or Club account to access the management dashboard.</p>
             </div>
             <div class="step-item">
                 <span class="step-num">02</span>
-                <h4>Upload</h4>
-                <p>Post your best game footage and build your stats.</p>
+                <h4>Add Players</h4>
+                <p>Input player details, stats, and upload their profiles to your digital roster.</p>
             </div>
             <div class="step-item">
                 <span class="step-num">03</span>
-                <h4>Connect</h4>
-                <p>Scouts search, discover, and message talent directly.</p>
+                <h4>Manage & Edit</h4>
+                <p>Keep profiles updated, track progress, and manage ownership status.</p>
             </div>
             <div class="step-item">
                 <span class="step-num">04</span>
-                <h4>Succeed</h4>
-                <p>Secure trials and sign professional contracts.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="about" class="about">
-    <div class="container">
-        <div class="about-header">
-            <h2 class="section-title">OUR VISION</h2>
-            <div class="section-line"></div>
-            <p class="vision-statement">
-                "To become East Africa's leading football talent marketplace, where every player has a fair chance to be seen, and every club can discover their next star player efficiently and affordably."
-            </p>
-            <p class="about-desc">
-                We believe talent is universal, but opportunity is not. Whether you're a striker from Kampala, a goalkeeper from Nairobi, or a midfielder from Dar es Salaam, we bridge the gap.
-            </p>
-        </div>
-
-        <div class="values-grid">
-            <div class="value-card">
-                <h4>ACCESSIBILITY</h4>
-                <p>Football opportunities for all, regardless of background or location.</p>
-            </div>
-            <div class="value-card">
-                <h4>TRANSPARENCY</h4>
-                <p>Direct connections without hidden fees, agents, or gatekeepers.</p>
-            </div>
-            <div class="value-card">
-                <h4>EXCELLENCE</h4>
-                <p>Supporting the highest standards of athletic talent and professionalism.</p>
-            </div>
-            <div class="value-card">
-                <h4>COMMUNITY</h4>
-                <p>Building a network that uplifts East African football together.</p>
+                <h4>Showcase</h4>
+                <p>Your players become visible to verified scouts via our QR technology.</p>
             </div>
         </div>
     </div>
@@ -152,7 +178,7 @@
                     {% csrf_token %}
                     <input type="email" name="email" placeholder="Your Email" required>
                     <input type="text" name="subject" placeholder="Subject" required>
-                    <button type="submit" class="btn btn-sky-primary">SEND</button>
+                    <button type="submit" class="btn btn-purple-primary">SEND</button>
                 </form>
             </div>
         </div>
@@ -161,8 +187,8 @@
 
 <section class="cta-bar">
     <div class="container cta-content">
-        <h2>READY TO TURN PRO?</h2>
-        <a href="{% url 'register' %}" class="btn btn-white">JOIN NOW - IT'S FREE</a>
+        <h2>TAKE CONTROL OF YOUR ACADEMY</h2>
+        <a href="{% url 'register' %}" class="btn btn-white">REGISTER NOW - IT'S FREE</a>
     </div>
 </section>
 
@@ -171,11 +197,11 @@
         <div class="footer-grid">
             <div class="footer-col">
                 <h4 class="footer-brand">FOOTBALL TALENT</h4>
-                <p>Connecting East African football talent with opportunities since 2024.</p>
+                <p>Connecting East African football talent with opportunities.</p>
                 <div class="social-icons">
-                    <a href="#" class="social-link">TW</a>
-                    <a href="#" class="social-link">IG</a>
-                    <a href="#" class="social-link">IN</a>
+                    <a href="https://x.com/RapcioFairplay" target="_blank" class="social-link">X</a>
+                    <a href="http://www.youtube.com/@RAPCIO-j1w" target="_blank" class="social-link">YT</a>
+                    <a href="https://vm.tiktok.com/ZS91KwRA7D93J-Py15d/" target="_blank" class="social-link">TT</a>
                 </div>
             </div>
 
@@ -183,7 +209,7 @@
                 <h4>NAVIGATION</h4>
                 <ul class="footer-links">
                     <li><a href="{% url 'home' %}">Home</a></li>
-                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#about">Mission & Vision</a></li>
                     <li><a href="#how-it-works">How It Works</a></li>
                     <li><a href="{% url 'register' %}">Register</a></li>
                 </ul>
@@ -204,494 +230,513 @@
                 <ul class="footer-contact-list">
                     <li>
                         <strong>Email:</strong><br>
-                        <a href="mailto:julienakawesi@outlook.com">julienakawesi@outlook.com</a>
+                        <a href="mailto:rapcio.fairplay@gmail.com">rapcio.fairplay@gmail.com</a>
+                    </li>
+                    <li>
+                        <strong>Contact:</strong><br>
+                        <a href="tel:0746836515">0746836515</a>
                     </li>
                     <li>
                         <strong>Location:</strong><br>
-                        Kampala, Uganda<br>
-                        <span class="text-muted">(Serving UG, KE, TZ)</span>
-                    </li>
-                    <li>
-                        <strong>Hours:</strong><br>
-                        Mon - Fri: 9AM - 6PM EAT
+                        National ICT Innovation Hub, Nakawa<br>
                     </li>
                 </ul>
             </div>
         </div>
-        
+
         <div class="footer-bottom">
-            <p>&copy; 2024 Football Talent Platform. All rights reserved.</p>
+            <p>&copy; 2024 Rapcio Fairplay Platform. All rights reserved.</p>
         </div>
     </div>
 </footer>
 
 <style>
-/* --- GLOBAL & SKY SPORTS THEME --- */
-:root {
-    --sky-blue: #06163F;   /* Deep Navy */
-    --sky-blue-light: #0c2666;
-    --sky-red: #CD1316;    /* Bright Red */
-    --sky-gray: #f1f2f3;
-    --text-dark: #111111;
-    --text-light: #555555;
-    --white: #ffffff;
-}
-
-body {
-    font-family: 'Roboto', 'Segoe UI', sans-serif; /* Clean sans-serif */
-    color: var(--text-dark);
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
-    background-color: #fff;
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-.section-header {
-    margin-bottom: 40px;
-    border-bottom: 4px solid var(--sky-gray);
-    display: flex;
-    align-items: center;
-    padding-bottom: 10px;
-}
-
-.section-title {
-    font-size: 1.8rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    color: var(--sky-blue);
-    margin: 0;
-    padding-right: 20px;
-}
-
-.section-line {
-    flex-grow: 1;
-    height: 4px;
-    background: var(--sky-red); /* Red accent line */
-}
-
-/* --- BUTTONS --- */
-.btn {
-    display: inline-block;
-    padding: 12px 30px;
-    font-weight: 700;
-    text-transform: uppercase;
-    text-decoration: none;
-    border-radius: 2px; /* Sharp edges */
-    transition: all 0.3s ease;
-    font-size: 0.9rem;
-}
-
-.btn-sky-primary {
-    background-color: var(--sky-red);
-    color: white;
-    border: 2px solid var(--sky-red);
-}
-
-.btn-sky-primary:hover {
-    background-color: #a00f11;
-    border-color: #a00f11;
-    color: white;
-}
-
-.btn-sky-outline {
-    background-color: transparent;
-    color: white;
-    border: 2px solid white;
-}
-
-.btn-sky-outline:hover {
-    background-color: white;
-    color: var(--sky-blue);
-}
-
-.btn-white {
-    background-color: white;
-    color: var(--sky-blue);
-    border: 2px solid white;
-}
-
-.btn-white:hover {
-    background-color: var(--sky-gray);
-    color: var(--sky-blue);
-}
-
-/* --- HERO SECTION --- */
-.hero {
-    background: linear-gradient(135deg, #06163F 0%, #000000 100%);
-    color: white;
-    padding: 100px 0;
-    position: relative;
-    overflow: hidden;
-}
-
-.breaking-badge {
-    background-color: var(--sky-red);
-    color: white;
-    padding: 5px 10px;
-    font-weight: bold;
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    margin-bottom: 15px;
-    display: inline-block;
-}
-
-.hero-title {
-    font-size: 3.5rem;
-    font-weight: 900;
-    line-height: 1.1;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-    font-style: italic; /* Sporty feel */
-}
-
-.hero-subtitle {
-    font-size: 1.2rem;
-    max-width: 600px;
-    margin-bottom: 40px;
-    color: #cccccc;
-}
-
-.hero-actions {
-    display: flex;
-    gap: 15px;
-}
-
-/* --- FEATURES (CARDS) --- */
-.features {
-    padding: 60px 0;
-    background-color: white;
-}
-
-.cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-}
-
-.sky-card {
-    background: white;
-    border: 1px solid #e1e1e1;
-    transition: transform 0.2s, box-shadow 0.2s;
-    position: relative;
-}
-
-.sky-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-    border-color: var(--sky-blue);
-}
-
-.card-top-border {
-    height: 4px;
-    background: var(--sky-blue);
-    width: 100%;
-}
-
-.sky-card:nth-child(2) .card-top-border {
-    background: var(--sky-red); /* Different color for middle card */
-}
-
-.card-body {
-    padding: 30px;
-}
-
-.card-body h3 {
-    color: var(--sky-blue);
-    font-weight: 900;
-    text-transform: uppercase;
-    margin-top: 0;
-}
-
-.highlight-text {
-    color: var(--sky-red);
-    font-weight: bold;
-    text-transform: uppercase;
-    font-size: 0.9rem;
-    margin-bottom: 10px;
-}
-
-.feature-list {
-    list-style: none;
-    padding: 0;
-    margin: 20px 0;
-}
-
-.feature-list li {
-    padding-left: 20px;
-    position: relative;
-    margin-bottom: 8px;
-    color: var(--text-light);
-    font-size: 0.95rem;
-}
-
-.feature-list li::before {
-    content: "•";
-    color: var(--sky-blue);
-    font-weight: bold;
-    position: absolute;
-    left: 0;
-}
-
-.text-link {
-    color: var(--sky-blue);
-    font-weight: 700;
-    text-decoration: none;
-    text-transform: uppercase;
-    font-size: 0.9rem;
-}
-
-.text-link:hover {
-    text-decoration: underline;
-}
-
-/* --- HOW IT WORKS --- */
-.how-it-works {
-    background-color: var(--sky-gray);
-    padding: 60px 0;
-}
-
-.steps-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 30px;
-}
-
-.step-item {
-    background: white;
-    padding: 30px;
-    border-bottom: 3px solid #ddd;
-}
-
-.step-num {
-    font-size: 3rem;
-    font-weight: 900;
-    color: #e1e1e1;
-    display: block;
-    margin-bottom: 10px;
-    line-height: 1;
-}
-
-.step-item h4 {
-    color: var(--sky-blue);
-    font-weight: 800;
-    text-transform: uppercase;
-    margin: 10px 0;
-}
-
-/* --- ABOUT SECTION --- */
-.about {
-    padding: 80px 0;
-}
-
-.about-header {
-    text-align: center;
-    max-width: 800px;
-    margin: 0 auto 60px;
-}
-
-.about-header .section-line {
-    margin: 0 auto;
-    width: 100px;
-    flex-grow: 0;
-    margin-bottom: 20px;
-}
-
-.vision-statement {
-    font-size: 1.4rem;
-    font-weight: 300;
-    color: var(--sky-blue);
-    font-style: italic;
-    margin-bottom: 20px;
-}
-
-.values-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-}
-
-.value-card {
-    background: var(--sky-blue);
-    color: white;
-    padding: 30px;
-    text-align: center;
-}
-
-.value-card h4 {
-    color: var(--sky-red);
-    font-weight: 900;
-    text-transform: uppercase;
-    margin-top: 0;
-    font-size: 1.1rem;
-}
-
-.value-card p {
-    font-size: 0.9rem;
-    margin: 0;
-    opacity: 0.9;
-}
-
-/* --- QUICK CONTACT STRIP --- */
-.quick-contact {
-    background: #f9f9f9;
-    padding: 40px 0;
-    border-top: 1px solid #ddd;
-}
-
-.qc-wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.qc-text h3 {
-    margin: 0;
-    color: var(--sky-blue);
-    font-weight: 800;
-}
-
-.inline-form {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.inline-form input {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 2px;
-    min-width: 200px;
-}
-
-/* --- CTA BAR --- */
-.cta-bar {
-    background-color: var(--sky-red);
-    padding: 50px 0;
-    text-align: center;
-    color: white;
-}
-
-.cta-content h2 {
-    font-weight: 900;
-    text-transform: uppercase;
-    font-size: 2.5rem;
-    margin-top: 0;
-    font-style: italic;
-}
-
-/* --- FOOTER --- */
-.footer {
-    background-color: #111;
-    color: #999;
-    padding: 60px 0 20px;
-    border-top: 5px solid var(--sky-blue);
-}
-
-.footer-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 40px;
-    margin-bottom: 40px;
-}
-
-.footer-col h4 {
-    color: white;
-    font-weight: 700;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-    font-size: 1rem;
-    border-left: 3px solid var(--sky-blue);
-    padding-left: 10px;
-}
-
-.footer-links {
-    list-style: none;
-    padding: 0;
-}
-
-.footer-links li {
-    margin-bottom: 10px;
-}
-
-.footer-links a {
-    color: #999;
-    text-decoration: none;
-    transition: color 0.3s;
-}
-
-.footer-links a:hover {
-    color: white;
-    padding-left: 5px;
-}
-
-/* Contact Specifics in Footer */
-.footer-contact-list {
-    list-style: none;
-    padding: 0;
-}
-
-.footer-contact-list li {
-    margin-bottom: 15px;
-    font-size: 0.9rem;
-}
-
-.footer-contact-list strong {
-    color: white;
-    display: block;
-    margin-bottom: 2px;
-}
-
-.footer-contact-list a {
-    color: #ccc;
-    text-decoration: none;
-}
-
-.social-icons {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.social-link {
-    width: 35px;
-    height: 35px;
-    background: #333;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 0.8rem;
-}
-
-.social-link:hover {
-    background: var(--sky-blue);
-}
-
-.footer-bottom {
-    border-top: 1px solid #333;
-    padding-top: 20px;
-    text-align: center;
-    font-size: 0.8rem;
-}
-
-/* --- RESPONSIVE --- */
-@media (max-width: 768px) {
-    .hero-title { font-size: 2.5rem; }
-    .qc-wrapper { flex-direction: column; text-align: center; }
-    .inline-form { flex-direction: column; width: 100%; }
-    .inline-form input { width: 100%; box-sizing: border-box; }
-    .inline-form button { width: 100%; }
-}
+    /* --- GLOBAL THEME --- */
+    :root {
+        --navy-blue: #06163F;
+        --purple-main: #6f42c1; /* VIBRANT PURPLE */
+        --purple-dark: #4e2a8f;
+        --light-gray: #f1f2f3;
+        --text-dark: #111111;
+        --text-light: #555555;
+        --white: #ffffff;
+    }
+
+    body {
+        font-family: 'Roboto', 'Segoe UI', sans-serif;
+        color: var(--text-dark);
+        line-height: 1.6;
+        margin: 0;
+        padding: 0;
+        background-color: #fff;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .section-header {
+        margin-bottom: 40px;
+        border-bottom: 4px solid var(--light-gray);
+        display: flex;
+        align-items: center;
+        padding-bottom: 10px;
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        color: var(--navy-blue);
+        margin: 0;
+        padding-right: 20px;
+    }
+
+    .section-line {
+        flex-grow: 1;
+        height: 4px;
+        background: var(--purple-main); /* Purple Accent */
+    }
+
+    /* --- BUTTONS --- */
+    .btn {
+        display: inline-block;
+        padding: 12px 30px;
+        font-weight: 700;
+        text-transform: uppercase;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+    }
+
+    .btn-purple-primary {
+        background-color: var(--purple-main);
+        color: white;
+        border: 2px solid var(--purple-main);
+    }
+
+    .btn-purple-primary:hover {
+        background-color: var(--purple-dark);
+        border-color: var(--purple-dark);
+        color: white;
+    }
+
+    .btn-outline {
+        background-color: transparent;
+        color: white;
+        border: 2px solid white;
+    }
+
+    .btn-outline:hover {
+        background-color: white;
+        color: var(--navy-blue);
+    }
+
+    .btn-white {
+        background-color: white;
+        color: var(--purple-main);
+        border: 2px solid white;
+    }
+
+    .btn-white:hover {
+        background-color: var(--light-gray);
+        color: var(--purple-dark);
+    }
+
+    /* --- HERO SECTION --- */
+    .hero {
+        background: linear-gradient(135deg, #2c0b55 0%, #000000 100%); /* Deep Purple Gradient */
+        color: white;
+        padding: 100px 0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .breaking-badge {
+        background-color: var(--purple-main);
+        color: white;
+        padding: 5px 10px;
+        font-weight: bold;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        margin-bottom: 15px;
+        display: inline-block;
+    }
+
+    .hero-title {
+        font-size: 3.5rem;
+        font-weight: 900;
+        line-height: 1.1;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        font-style: italic;
+    }
+
+    .hero-subtitle {
+        font-size: 1.2rem;
+        max-width: 600px;
+        margin-bottom: 40px;
+        color: #e0d4fc; /* Light lavender text */
+    }
+
+    .hero-actions {
+        display: flex;
+        gap: 15px;
+    }
+
+    /* --- CORPORATE IDENTITY (Mission/Vision) --- */
+    .corporate-identity {
+        padding: 80px 0;
+        background: #fff;
+    }
+
+    .identity-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+    }
+
+    .identity-card {
+        background: #fdfdfd;
+        padding: 40px 30px;
+        border-top: 5px solid var(--purple-main);
+        box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        transition: transform 0.3s;
+    }
+
+    .identity-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .featured-card {
+        background: var(--navy-blue);
+        color: white;
+        border-top: 5px solid var(--purple-main);
+    }
+
+    .featured-card h3, .featured-card p {
+        color: white;
+    }
+
+    .icon-box {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+    }
+
+    .identity-card h3 {
+        font-size: 1.5rem;
+        font-weight: 900;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        color: var(--navy-blue);
+    }
+
+    .values-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .values-list li {
+        margin-bottom: 10px;
+        padding-left: 20px;
+        position: relative;
+    }
+
+    .values-list li::before {
+        content: "•";
+        color: var(--purple-main);
+        position: absolute;
+        left: 0;
+        font-size: 1.2rem;
+    }
+
+    /* --- FEATURES (CARDS) --- */
+    .features {
+        padding: 60px 0;
+        background-color: #f9f9f9;
+    }
+
+    .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+    }
+
+    .sky-card {
+        background: white;
+        border: 1px solid #e1e1e1;
+        transition: transform 0.2s, box-shadow 0.2s;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .sky-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        border-color: var(--navy-blue);
+    }
+
+    .card-top-border {
+        height: 4px;
+        background: var(--navy-blue);
+        width: 100%;
+    }
+
+    .sky-card:nth-child(2) .card-top-border {
+        background: var(--purple-main);
+    }
+
+    .card-body {
+        padding: 30px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .card-body h3 {
+        color: var(--navy-blue);
+        font-weight: 900;
+        text-transform: uppercase;
+        margin-top: 0;
+    }
+
+    .highlight-text {
+        color: var(--purple-main);
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        margin-bottom: 10px;
+    }
+
+    .feature-list {
+        list-style: none;
+        padding: 0;
+        margin: 20px 0 30px;
+        flex-grow: 1;
+    }
+
+    .feature-list li {
+        padding-left: 20px;
+        position: relative;
+        margin-bottom: 8px;
+        color: var(--text-light);
+        font-size: 0.95rem;
+    }
+
+    .feature-list li::before {
+        content: "✓";
+        color: var(--purple-main);
+        font-weight: bold;
+        position: absolute;
+        left: 0;
+    }
+
+    .text-link {
+        color: var(--purple-main);
+        font-weight: 700;
+        text-decoration: none;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        margin-top: auto;
+    }
+
+    .text-link:hover {
+        text-decoration: underline;
+    }
+
+    /* --- HOW IT WORKS --- */
+    .how-it-works {
+        background-color: white;
+        padding: 60px 0;
+    }
+
+    .steps-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 30px;
+    }
+
+    .step-item {
+        background: var(--light-gray);
+        padding: 30px;
+        border-bottom: 4px solid var(--purple-main);
+    }
+
+    .step-num {
+        font-size: 3rem;
+        font-weight: 900;
+        color: #ccc;
+        display: block;
+        margin-bottom: 10px;
+        line-height: 1;
+    }
+
+    .step-item h4 {
+        color: var(--navy-blue);
+        font-weight: 800;
+        text-transform: uppercase;
+        margin: 10px 0;
+    }
+
+    /* --- QUICK CONTACT STRIP --- */
+    .quick-contact {
+        background: #f1f1f1;
+        padding: 40px 0;
+        border-top: 1px solid #ddd;
+    }
+
+    .qc-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .qc-text h3 {
+        margin: 0;
+        color: var(--navy-blue);
+        font-weight: 800;
+    }
+
+    .inline-form {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .inline-form input {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        min-width: 200px;
+    }
+
+    /* --- CTA BAR --- */
+    .cta-bar {
+        background-color: var(--purple-main);
+        padding: 50px 0;
+        text-align: center;
+        color: white;
+    }
+
+    .cta-content h2 {
+        font-weight: 900;
+        text-transform: uppercase;
+        font-size: 2.5rem;
+        margin-top: 0;
+        font-style: italic;
+    }
+
+    /* --- FOOTER --- */
+    .footer {
+        background-color: #111;
+        color: #999;
+        padding: 60px 0 20px;
+        border-top: 5px solid var(--purple-main);
+    }
+
+    .footer-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 40px;
+        margin-bottom: 40px;
+    }
+
+    .footer-col h4 {
+        color: white;
+        font-weight: 700;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+        font-size: 1rem;
+        border-left: 3px solid var(--purple-main);
+        padding-left: 10px;
+    }
+
+    .footer-links {
+        list-style: none;
+        padding: 0;
+    }
+
+    .footer-links li {
+        margin-bottom: 10px;
+    }
+
+    .footer-links a {
+        color: #999;
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+
+    .footer-links a:hover {
+        color: var(--purple-main);
+        padding-left: 5px;
+    }
+
+    /* Contact Specifics in Footer */
+    .footer-contact-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .footer-contact-list li {
+        margin-bottom: 15px;
+        font-size: 0.9rem;
+    }
+
+    .footer-contact-list strong {
+        color: white;
+        display: block;
+        margin-bottom: 2px;
+    }
+
+    .footer-contact-list a {
+        color: #ccc;
+        text-decoration: none;
+    }
+
+    .social-icons {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .social-link {
+        width: 35px;
+        height: 35px;
+        background: #333;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 0.8rem;
+    }
+
+    .social-link:hover {
+        background: var(--purple-main);
+    }
+
+    .footer-bottom {
+        border-top: 1px solid #333;
+        padding-top: 20px;
+        text-align: center;
+        font-size: 0.8rem;
+    }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 768px) {
+        .hero-title { font-size: 2.5rem; }
+        .qc-wrapper { flex-direction: column; text-align: center; }
+        .inline-form { flex-direction: column; width: 100%; }
+        .inline-form input { width: 100%; box-sizing: border-box; }
+        .inline-form button { width: 100%; }
+    }
 </style>
 
 {% endblock %}
