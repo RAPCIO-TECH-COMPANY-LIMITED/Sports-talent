@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-zgl!we9$%*#i9@yb2xs*b36_0a=2$iuv53gv8h2afs3nkkb*73
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['sports-talent.onrender.com', '127.0.0.1']
+ALLOWED_HOSTS = ['sports-talent.onrender.com', '127.0.0.1','178.128.195.147']
 
 CSRF_TRUSTED_ORIGINS = ['https://sports-talent.onrender.com/']
 # Application definition
@@ -84,10 +84,21 @@ CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'rapcio',          # The DB name you created
+        'USER': 'rapcio_user',      # The user you created
+        'PASSWORD': 'password',       # The password you set
+        'HOST': 'localhost',          # Since it's on the same server
+        'PORT': '',                   # Leave blank for default (5432)
     }
 }
 
@@ -133,3 +144,5 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
