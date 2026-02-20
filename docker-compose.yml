@@ -11,7 +11,7 @@ services:
   web:
     build: .
     # gunicorn now only needs to listen to internal requests from nginx
-    command: gunicorn my_project.wsgi:application --bind 0.0.0.0:8000
+    command: gunicorn talentplatform.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - .:/app
       - static_volume:/app/staticfiles
