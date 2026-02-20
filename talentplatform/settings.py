@@ -27,8 +27,13 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1','178.128.195.147','playersystem.org', 'www.playersystem.org']
 
-CSRF_TRUSTED_ORIGINS = ['https://sports-talent.onrender.com/']
+CSRF_TRUSTED_ORIGINS = [
+    'https://playersystem.org',
+    'https://www.playersystem.org',
+]
+
 # Application definition
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
