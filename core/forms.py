@@ -13,11 +13,14 @@ class UserRegistrationForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
         model = CustomUser
-        fields = UserCreationForm.Meta.fields + ('email', 'user_type')
+        fields = UserCreationForm.Meta.fields + ('email', 'user_type', 'first_name', 'last_name')
 
     def save(self, commit=True):
         user = super().save(commit=False)
         user.user_type = self.cleaned_data.get('user_type')
+        user.first_name = self.cleaned_data.get('first_name')
+        user.last_name = self.cleaned_data.get('last_name')
+
         if commit:
             user.save()
             user_type = self.cleaned_data.get('user_type')
@@ -42,17 +45,22 @@ class PlayerSignUpForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
         model = CustomUser
+        fields = UserCreationForm.Meta.fields + ('first_name', 'last_name')
 
     @transaction.atomic
     def save(self):
         user = super().save(commit=False)
         user.user_type = 'player'
+
+        # 1. Assign first_name and last_name to the User model instance
+        user.first_name = self.cleaned_data.get('first_name')
+        user.last_name = self.cleaned_data.get('last_name')
         user.save()
+
+        # 2. Create PlayerProfile with only the fields belonging to it
         PlayerProfile.objects.create(
             user=user,
             country=self.cleaned_data.get('country'),
-            first_name=self.cleaned_data.get('first_name'),
-            last_name=self.cleaned_data.get('last_name'),
             position=self.cleaned_data.get('position'),
             date_of_birth=self.cleaned_data.get('date_of_birth')
         )
