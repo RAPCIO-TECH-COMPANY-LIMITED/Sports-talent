@@ -172,6 +172,7 @@
         text-transform: uppercase;
         font-size: 0.75rem;
         transition: all 0.2s;
+        cursor: pointer;
     }
 
     .btn-view:hover {
@@ -256,7 +257,12 @@
                 <td>{{ player.country }}</td>
                 <td>{{ player.age|default:'-' }}</td>
                 <td>
+                    <!-- Conditional Logic for Authenticated Users -->
+                    {% if user.is_authenticated %}
                     <a href="{% url 'player_detail' player.pk %}" class="btn-view">View Profile &rarr;</a>
+                    {% else %}
+                    <a href="#" onclick="requireLogin(event, '{% url 'login' %}?next={% url 'player_detail' player.pk %}')" class="btn-view">View Profile &rarr;</a>
+                    {% endif %}
                 </td>
             </tr>
             {% empty %}
@@ -272,6 +278,13 @@
 
 {% block scripts %}
 <script>
+    // New function to handle unauthenticated clicks
+    function requireLogin(event, loginUrl) {
+        event.preventDefault(); // Stop the link from acting normally
+        alert("Login first to view profile information."); // Display the message
+        window.location.href = loginUrl; // Redirect to the login page
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
         const searchInput = document.getElementById('search-filter');
         const positionFilter = document.getElementById('position-filter');
