@@ -1,257 +1,45 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In | EA Football Talent</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;0,900;1,900&display=swap" rel="stylesheet">
+{% extends 'base.html' %}
 
-    <style>
-        /* --- UPDATED THEME (PURPLE) --- */
-        :root {
-            --navy-blue: #06163F;
-            --purple-main: #6f42c1;  /* Replaces Sky Red */
-            --purple-dark: #4e2a8f;
-            --light-gray: #f4f4f4;
-            --text-dark: #111;
-            --text-light: #666;
-            --white: #ffffff;
-            --error-red: #dc3545;
-        }
+{% block content %}
+<div class="flex flex-col items-center justify-center min-h-[60vh] px-4">
 
-        * {
-            box-sizing: border-box;
-        }
+    <!-- Premium Login Card (Sky Sports Aesthetic) -->
+    <div class="w-full max-w-lg bg-white shadow-2xl overflow-hidden border-t-8 border-purple-700">
 
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--navy-blue);
-            /* Updated Gradient: Deep Purple to Black */
-            background: linear-gradient(135deg, #2c0b55 0%, #000000 100%);
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* --- LOGIN CARD --- */
-        .login-container {
-            width: 100%;
-            max-width: 420px;
-            background: white;
-            position: relative;
-            padding: 0;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            /* Added slight rounding for modern feel */
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        /* Top colored bar decoration */
-        .brand-stripe {
-            height: 6px;
-            width: 100%;
-            /* Gradient bar: Navy to Purple */
-            background: linear-gradient(90deg, var(--navy-blue) 0%, var(--purple-main) 100%);
-        }
-
-        .login-content {
-            padding: 40px;
-        }
-
-        /* --- HEADER SECTION --- */
-        .login-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .logo {
-            display: inline-block;
-            color: var(--navy-blue);
-            font-weight: 900;
-            font-size: 1.2rem;
-            text-decoration: none;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
-            font-style: italic;
-        }
-
-        .login-header h1 {
-            margin: 0;
-            color: var(--navy-blue);
-            font-size: 2rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            line-height: 1;
-        }
-
-        .login-header p {
-            color: var(--text-light);
-            font-size: 0.9rem;
-            margin-top: 10px;
-        }
-
-        /* --- FORM STYLING --- */
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            font-weight: 700;
-            color: var(--navy-blue);
-            font-size: 0.85rem;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-        }
-
-        /* Styling Django Input Fields */
-        .form-group input {
-            width: 100%;
-            padding: 12px 15px;
-            font-size: 1rem;
-            border: 1px solid #ccc;
-            background-color: var(--light-gray);
-            outline: none;
-            transition: all 0.3s;
-            color: var(--text-dark);
-            border-radius: 4px;
-        }
-
-        .form-group input:focus {
-            border-color: var(--purple-main);
-            background-color: white;
-            /* Purple focus accent on left */
-            border-left: 4px solid var(--purple-main);
-        }
-
-        /* Error styling */
-        .errorlist {
-            list-style: none;
-            padding: 0;
-            margin: 5px 0 0 0;
-            color: var(--error-red);
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-
-        /* --- BUTTONS & LINKS --- */
-        .submit-btn {
-            width: 100%;
-            padding: 14px;
-            background-color: var(--purple-main);
-            color: white;
-            border: none;
-            font-size: 1rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: background 0.3s;
-            letter-spacing: 0.5px;
-            margin-top: 10px;
-            border-radius: 4px;
-        }
-
-        .submit-btn:hover {
-            background-color: var(--purple-dark);
-        }
-
-        .forgot-password {
-            display: block;
-            text-align: right;
-            font-size: 0.85rem;
-            color: var(--navy-blue);
-            text-decoration: none;
-            margin-bottom: 20px;
-            font-weight: 500;
-        }
-
-        .forgot-password:hover {
-            text-decoration: underline;
-            color: var(--purple-main);
-        }
-
-        /* --- FOOTER / SIGNUP --- */
-        .signup-link {
-            text-align: center;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #eee;
-            font-size: 0.9rem;
-            color: var(--text-light);
-        }
-
-        .signup-link a {
-            color: var(--purple-main);
-            font-weight: 900;
-            text-decoration: none;
-            text-transform: uppercase;
-        }
-
-        .signup-link a:hover {
-            text-decoration: underline;
-            color: var(--purple-dark);
-        }
-
-        /* --- RESPONSIVE --- */
-        @media (max-width: 480px) {
-            .login-container {
-                height: 100vh;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                border-radius: 0;
-            }
-            .brand-stripe {
-                display: none; /* Hide stripe on mobile full screen */
-            }
-        }
-    </style>
-</head>
-<body>
-
-<div class="login-container">
-    <div class="brand-stripe"></div>
-
-    <div class="login-content">
-        <div class="login-header">
-            <a href="{% url 'home' %}" class="logo">EA Football Talent</a>
-            <h1>Sign In</h1>
-            <p>Access your professional dashboard</p>
+        <!-- Brand Header Section -->
+        <div class="bg-black p-8 text-center">
+            <h2 class="text-4xl font-black text-white tracking-widest uppercase italic">PRO<span class="text-purple-500">TALENT</span></h2>
+            <span class="text-gray-400 text-xs font-bold tracking-[0.2em] uppercase mt-2 block">Admin Secure Login</span>
         </div>
 
-        <form method="post" novalidate>
-            {% csrf_token %}
+        <!-- Form Section -->
+        <div class="p-8 md:p-12 bg-gray-50">
+            <h3 class="text-2xl font-black text-gray-900 mb-8 text-center uppercase tracking-tight border-b-2 border-gray-200 pb-4">Sign In</h3>
 
-            {% for field in form %}
-            <div class="form-group">
-                {{ field.label_tag }}
-                {{ field }}
+            <form method="post">
+                {% csrf_token %}
 
-                {% if field.errors %}
-                <ul class="errorlist">
-                    {% for error in field.errors %}
-                    <li>{{ error }}</li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
+                <!-- Styled Django Form Wrapper: Forces Black Borders and Large Inputs -->
+                <div class="text-gray-900 [&_p]:mb-6 [&_label]:block [&_label]:font-black [&_label]:uppercase [&_label]:tracking-wider [&_label]:text-sm [&_label]:mb-2 [&_input]:w-full [&_input]:border-2 [&_input]:border-black [&_input]:p-4 [&_input]:text-lg [&_input]:font-bold [&_input]:bg-white [&_input]:focus:outline-none [&_input]:focus:border-purple-700 [&_input]:focus:ring-2 [&_input]:focus:ring-purple-700 [&_input]:transition-colors">
+                    {{ form.as_p }}
+                </div>
+
+                <button type="submit" class="w-full py-4 mt-4 bg-purple-700 hover:bg-black text-white font-black text-lg uppercase tracking-widest transition-colors duration-300 border-2 border-purple-700 hover:border-black">
+                    Sign In Now
+                </button>
+                <input type="hidden" name="next" value="{% url 'dashboard' %}" />
+            </form>
+
+            <div class="mt-10 text-center">
+                <p class="text-sm text-gray-500 font-bold uppercase tracking-wide">
+                    Don't have an account?
+                    <br class="mb-3 block">
+                    <a href="{% url 'register' %}" class="text-black hover:text-purple-700 transition-colors border-b-2 border-black hover:border-purple-700 pb-1">
+                        Register Here
+                    </a>
+                </p>
             </div>
-            {% endfor %}
-
-            <a href="#" class="forgot-password">Forgot your password?</a>
-
-            <button type="submit" class="submit-btn">Sign In</button>
-        </form>
-
-        <div class="signup-link">
-            <p>Don't have an account? <a href="{% url 'register' %}">Join Free</a></p>
         </div>
     </div>
 </div>
-
-</body>
-</html>
+{% endblock %}

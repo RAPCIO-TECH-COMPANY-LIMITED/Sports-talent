@@ -76,10 +76,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'talentplatform.wsgi.application'
 
-AUTH_USER_MODEL = 'core.CustomUser'
 
-LOGIN_REDIRECT_URL = 'login_redirect'
-LOGOUT_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'dashboard'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
@@ -96,18 +94,32 @@ CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+ENVIRONMENT = os.environ.get('ENVIRONMENT', 'development')
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('POSTGRES_DB', 'postgres'),
-        'USER': os.environ.get('POSTGRES_USER', 'postgres'),
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', 'postgres'),
-        'HOST': os.environ.get('DB_HOST', 'db'),
-        'PORT': os.environ.get('DB_PORT', '5432'),
+if ENVIRONMENT == 'production':
+    # --- PRODUCTION SETTINGS ---
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ.get('POSTGRES_DB', 'postgres'),
+            'USER': os.environ.get('POSTGRES_USER', 'postgres'),
+            'PASSWORD': os.environ.get('POSTGRES_PASSWORD', 'postgres'),
+            'HOST': os.environ.get('DB_HOST', 'db'),
+            'PORT': os.environ.get('DB_PORT', '5432'),
+        }
     }
-}
-
+else:
+    # --- DEVELOPMENT SETTINGS ---
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'dev',
+            'USER': 'postgres',
+            'PASSWORD': 'Nakawesi',
+            'HOST': 'localhost',
+            'PORT': '5432',
+        }
+    }
 
 
 # Password validation

@@ -1,214 +1,24 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join the Team - EA Football Talent</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;0,900;1,900&display=swap" rel="stylesheet">
+{% extends 'base.html' %}
 
-    <style>
-        /* --- UPDATED THEME (PURPLE) --- */
-        :root {
-            --navy-blue: #06163F;
-            --purple-main: #6f42c1;  /* Replaces Sky Red */
-            --purple-dark: #4e2a8f;
-            --light-gray: #f4f4f4;
-            --text-dark: #111;
-            --text-light: #666;
-            --white: #ffffff;
-            --error-red: #dc3545;     /* Keep errors distinct */
-        }
+{% block content %}
+<div class="max-w-md mx-auto bg-white rounded-lg shadow-lg p-8 border-t-4 border-purple-700 mt-10">
+    <h2 class="text-3xl font-bold text-center text-black mb-2">Create Account</h2>
+    <p class="text-center text-gray-600 mb-6 text-sm">Register to manage academies and players</p>
 
-        * { box-sizing: border-box; }
+    <form method="post" class="space-y-2">
+        {% csrf_token %}
 
-        body {
-            margin: 0; padding: 0;
-            font-family: 'Roboto', sans-serif;
-            /* Updated Gradient to match Index Page */
-            background: linear-gradient(135deg, #2c0b55 0%, #000000 100%);
-            min-height: 100vh;
-            display: flex; justify-content: center; align-items: center;
-            padding: 20px;
-        }
-
-        .register-container {
-            display: flex; width: 100%; max-width: 1000px;
-            background: var(--white); box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            overflow: hidden;
-            border-radius: 8px; /* Added slight rounding */
-        }
-
-        .promo-panel {
-            flex: 0.8; background-color: var(--navy-blue); color: white;
-            padding: 50px 40px; display: flex; flex-direction: column;
-            justify-content: center; position: relative;
-        }
-
-        /* Top accent bar changed to Purple */
-        .promo-panel::before {
-            content: ''; position: absolute; top: 0; left: 0;
-            width: 100%; height: 6px; background: var(--purple-main);
-        }
-
-        .form-panel { flex: 1.5; background: var(--white); display: flex; flex-direction: column; }
-
-        /* TABS */
-        .tab-buttons { display: flex; background-color: #e0e0e0; }
-        .tab-button {
-            flex: 1; padding: 20px; border: none; background: transparent;
-            font-family: 'Roboto', sans-serif; font-weight: 700;
-            text-transform: uppercase; color: var(--text-light); cursor: pointer;
-            border-top: 4px solid transparent; transition: all 0.3s ease; font-size: 0.8rem;
-        }
-
-        /* Active Tab Accent changed to Purple */
-        .tab-button.active {
-            background: var(--white);
-            color: var(--navy-blue);
-            border-top: 4px solid var(--purple-main);
-        }
-
-        /* FORM SECTIONS */
-        .form-section { display: none; padding: 40px; animation: fadeIn 0.4s ease; }
-        .form-section.active { display: block; }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* INPUTS */
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; font-weight: 700; color: var(--navy-blue); font-size: 0.75rem; margin-bottom: 5px; text-transform: uppercase; }
-        .form-group input, .form-group select, .form-group textarea {
-            width: 100%; padding: 10px; border: 1px solid #ccc; background-color: var(--light-gray); border-radius: 4px;
-        }
-
-        /* Focus state for inputs */
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-            outline: none;
-            border-color: var(--purple-main);
-            background-color: white;
-        }
-
-        /* Submit Button changed to Purple */
-        .submit-btn {
-            width: 100%; padding: 15px;
-            background-color: var(--purple-main);
-            color: white;
-            border: none; font-weight: 900; text-transform: uppercase; cursor: pointer; margin-top: 10px;
-            border-radius: 4px;
-            transition: background 0.3s;
-        }
-
-        .submit-btn:hover {
-            background-color: var(--purple-dark);
-        }
-
-        .login-link { text-align: center; padding: 20px; background-color: #f9f9f9; border-top: 1px solid #eee; font-size: 0.9rem; }
-        .errorlist { color: var(--error-red); font-size: 0.8rem; list-style: none; padding: 0; font-weight: bold; }
-
-        /* Badge on left panel */
-        .badge {
-            background-color: var(--purple-main);
-            color: white;
-            padding: 5px 10px;
-            font-weight: bold;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            margin-bottom: 15px;
-            display: inline-block;
-            border-radius: 2px;
-        }
-    </style>
-</head>
-<body>
-
-<div class="register-container">
-    <div class="promo-panel">
-        <div class="badge">SEASON 2026</div>
-        <h2>Build Your Future</h2>
-        <p>The gateway for East African talent to reach Global Scouts.</p>
-        <ul style="list-style: none; padding:0; margin-top:20px; color:#ccc;">
-            <li>✓ Professional Scouting</li>
-            <li>✓ Academy Integration</li>
-            <li>✓ Video Analysis</li>
-        </ul>
-    </div>
-
-    <div class="form-panel">
-        <div class="tab-buttons">
-            <button class="tab-button active" onclick="showForm(event, 'player-form')">Player</button>
-            <button class="tab-button" onclick="showForm(event, 'club-form')">Club</button>
-            <button class="tab-button" onclick="showForm(event, 'academy-form')">Academy</button>
+        <div class="text-gray-800">
+            {{ form.as_p }}
         </div>
 
-        <div id="player-form" class="form-section active">
-            <h3>Player Registration</h3>
-            <form method="post" novalidate>
-                {% csrf_token %}
-                {% for field in player_form %}
-                <div class="form-group">
-                    {{ field.label_tag }} {{ field }}
-                    {% if field.errors %}<ul class="errorlist">{% for error in field.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
-                </div>
-                {% endfor %}
-                <button type="submit" name="register_player" class="submit-btn">Register as Player</button>
-            </form>
-        </div>
+        <button type="submit" class="w-full py-3 bg-black text-white rounded-md hover:bg-gray-800 font-bold shadow transition mt-6">
+            Register Account
+        </button>
+    </form>
 
-        <div id="club-form" class="form-section">
-            <h3>Club Registration</h3>
-            <form method="post" novalidate>
-                {% csrf_token %}
-                {% for field in club_form %}
-                <div class="form-group">
-                    {{ field.label_tag }} {{ field }}
-                    {% if field.errors %}<ul class="errorlist">{% for error in field.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
-                </div>
-                {% endfor %}
-                <button type="submit" name="register_club" class="submit-btn">Register as Club</button>
-            </form>
-        </div>
-
-        <div id="academy-form" class="form-section">
-            <h3>Academy Registration</h3>
-            <form method="post" novalidate>
-                {% csrf_token %}
-                {% for field in academy_form %}
-                <div class="form-group">
-                    {{ field.label_tag }} {{ field }}
-                    {% if field.errors %}<ul class="errorlist">{% for error in field.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
-                </div>
-                {% endfor %}
-                <button type="submit" name="register_academy" class="submit-btn">Register Academy</button>
-            </form>
-        </div>
-
-        <div class="login-link">
-            <p>Already have an account? <a href="{% url 'login' %}" style="color: var(--purple-main); font-weight:900; text-decoration:none;">SIGN IN</a></p>
-        </div>
-    </div>
+    <p class="text-center text-sm text-gray-600 mt-6">
+        Already have an account? <a href="{% url 'login' %}" class="text-purple-700 font-bold hover:underline">Log in</a>.
+    </p>
 </div>
-
-<script>
-    function showForm(evt, formId) {
-        // Hide all sections
-        const sections = document.getElementsByClassName("form-section");
-        for (let i = 0; i < sections.length; i++) {
-            sections[i].style.display = "none";
-            sections[i].classList.remove("active");
-        }
-
-        // Remove active class from all buttons
-        const buttons = document.getElementsByClassName("tab-button");
-        for (let i = 0; i < buttons.length; i++) {
-            buttons[i].classList.remove("active");
-        }
-
-        // Show current form and add active class to button
-        document.getElementById(formId).style.display = "block";
-        document.getElementById(formId).classList.add("active");
-        evt.currentTarget.classList.add("active");
-    }
-</script>
-</body>
-</html>
+{% endblock %}
