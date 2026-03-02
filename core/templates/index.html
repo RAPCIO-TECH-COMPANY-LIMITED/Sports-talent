@@ -2,160 +2,146 @@
 {% load static %}
 
 {% block content %}
+<!-- HERO SECTION: High Contrast, Bold -->
+<section class="relative bg-black text-white py-20 lg:py-32 overflow-hidden border-b-8 border-purple-700 w-full max-w-none m-0 px-4 sm:px-6 lg:px-8">
+    <!-- Abstract Background Elements -->
+    <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-purple-900 opacity-20 blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-72 h-72 rounded-full bg-purple-600 opacity-20 blur-3xl pointer-events-none"></div>
 
-<!-- HERO -->
-<section class="bg-gradient-to-br from-gray-900 via-black to-purple-900 text-white">
-    <div class="max-w-7xl mx-auto px-6 py-24 text-center lg:text-left">
-        <div class="max-w-3xl">
-            <h1 class="text-4xl md:text-6xl font-extrabold leading-tight tracking-tight">
-                Manage Talent.<br>
-                Build Champions.
+    <div class="max-w-7xl mx-auto relative z-10 text-center lg:text-left flex flex-col lg:flex-row items-center gap-12">
+        <div class="lg:w-3/5">
+            <h1 class="text-5xl sm:text-6xl md:text-7xl font-black uppercase tracking-tighter leading-none mb-6">
+                ELEVATE <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-purple-700">YOUR SQUAD</span><br>
+                TO THE NEXT LEVEL
             </h1>
-
-            <p class="mt-6 text-lg text-gray-300">
-                A modern talent management platform for football clubs and academies.
-                Register players, track performance, manage squads, and showcase talent — all in one place.
+            <p class="text-lg md:text-xl text-gray-300 font-medium max-w-2xl mx-auto lg:mx-0 mb-10 border-l-4 border-purple-500 pl-4">
+                The premier digital scouting and management ecosystem. Uncover raw talent, digitize your academy rosters, and connect with global opportunities—all in real-time.
             </p>
-
-            <div class="mt-8 flex flex-col sm:flex-row gap-4">
-                <a href="{% url 'register' %}"
-                   class="px-8 py-4 bg-purple-600 hover:bg-purple-700 rounded-xl font-semibold shadow-lg transition">
-                    Register Your Club
+            <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                <a href="{% url 'register' %}" class="bg-purple-600 text-white px-8 py-4 text-sm font-black uppercase tracking-widest hover:bg-purple-500 transition-all shadow-[6px_6px_0px_0px_rgba(255,255,255,0.2)] hover:shadow-none hover:translate-y-1 hover:translate-x-1 text-center">
+                    Register Academy
                 </a>
-
-                <a href="{% url 'login' %}"
-                   class="px-8 py-4 border border-gray-400 hover:bg-white hover:text-black rounded-xl font-semibold transition">
-                    Login
+                <a href="#services" class="bg-transparent border-2 border-white text-white px-8 py-4 text-sm font-black uppercase tracking-widest hover:bg-white hover:text-black transition-all text-center">
+                    Explore Features
                 </a>
             </div>
         </div>
-    </div>
-</section>
-
-
-<!-- CORE FEATURES -->
-<section class="bg-gray-50 py-20">
-    <div class="max-w-7xl mx-auto px-6">
-
-        <div class="text-center mb-16">
-            <h2 class="text-3xl font-bold text-gray-900">
-                Everything You Need to Manage Your Squad
-            </h2>
-            <p class="mt-4 text-gray-600">
-                Built specifically for clubs and academies.
-            </p>
-        </div>
-
-        <div class="grid md:grid-cols-3 gap-8">
-
-            <!-- Player Management -->
-            <div class="bg-white rounded-2xl shadow-md p-8 hover:shadow-xl transition">
-                <h3 class="text-xl font-semibold mb-3">Player Management</h3>
-                <p class="text-gray-600 mb-4">
-                    Create detailed player profiles with stats, position, age,
-                    documents and verified club ownership.
-                </p>
-                <ul class="text-sm text-gray-500 space-y-2">
-                    <li>• Digital roster</li>
-                    <li>• Editable player stats</li>
-                    <li>• Secure data storage</li>
-                </ul>
+        <div class="lg:w-2/5 hidden md:block">
+            <!-- Stylized placeholder for a dashboard graphic/player image -->
+            <div class="bg-gray-900 border-4 border-gray-800 p-4 transform rotate-2 hover:rotate-0 transition duration-500 shadow-2xl relative">
+                <div class="absolute -top-4 -left-4 bg-purple-600 text-white text-xs font-bold uppercase tracking-widest px-3 py-1 z-20">Live Stats</div>
+                <div class="w-full h-64 bg-gray-800 flex items-center justify-center border border-gray-700">
+                    <span class="text-gray-500 font-black uppercase tracking-widest text-xl opacity-50">App Interface Preview</span>
+                </div>
             </div>
-
-            <!-- Performance Tracking -->
-            <div class="bg-white rounded-2xl shadow-md p-8 hover:shadow-xl transition">
-                <h3 class="text-xl font-semibold mb-3">Performance Tracking</h3>
-                <p class="text-gray-600 mb-4">
-                    Track match performance, monitor development,
-                    and maintain structured training records.
-                </p>
-                <ul class="text-sm text-gray-500 space-y-2">
-                    <li>• Match statistics</li>
-                    <li>• Progress monitoring</li>
-                    <li>• Growth analytics</li>
-                </ul>
-            </div>
-
-            <!-- Talent Showcase -->
-            <div class="bg-white rounded-2xl shadow-md p-8 hover:shadow-xl transition">
-                <h3 class="text-xl font-semibold mb-3">Talent Visibility</h3>
-                <p class="text-gray-600 mb-4">
-                    Give your players professional visibility and
-                    make them discoverable to verified scouts.
-                </p>
-                <ul class="text-sm text-gray-500 space-y-2">
-                    <li>• Public player profiles</li>
-                    <li>• QR identity system</li>
-                    <li>• Scout access</li>
-                </ul>
-            </div>
-
         </div>
     </div>
 </section>
 
+<!-- SERVICES SECTION -->
+<section id="services" class="py-20 bg-gray-100 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+        <h2 class="text-4xl font-black uppercase tracking-tight text-black mb-4">Core <span class="text-purple-600">Services</span></h2>
+        <div class="w-24 h-1 bg-black mx-auto"></div>
+    </div>
 
-<!-- HOW IT WORKS -->
-<section class="bg-white py-20">
-    <div class="max-w-6xl mx-auto px-6">
-
-        <div class="text-center mb-16">
-            <h2 class="text-3xl font-bold text-gray-900">
-                How It Works
-            </h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Service 1 -->
+        <div class="bg-white p-8 border-2 border-transparent hover:border-purple-600 transition-colors shadow-lg group">
+            <div class="w-14 h-14 bg-black text-white flex items-center justify-center mb-6 group-hover:bg-purple-600 transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+            </div>
+            <h3 class="text-xl font-black uppercase tracking-wider mb-3">Roster Management</h3>
+            <p class="text-gray-600 text-sm leading-relaxed font-medium">Digitize your academy. Add players, manage positions, update bios, and keep all vital documents securely stored in one central hub.</p>
         </div>
-
-        <div class="grid md:grid-cols-4 gap-8 text-center">
-
-            <div>
-                <div class="text-4xl font-bold text-purple-600 mb-4">01</div>
-                <h4 class="font-semibold mb-2">Register Club</h4>
-                <p class="text-gray-600 text-sm">
-                    Create your academy or club account.
-                </p>
+        <!-- Service 2 -->
+        <div class="bg-white p-8 border-2 border-transparent hover:border-purple-600 transition-colors shadow-lg group">
+            <div class="w-14 h-14 bg-black text-white flex items-center justify-center mb-6 group-hover:bg-purple-600 transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
             </div>
-
-            <div>
-                <div class="text-4xl font-bold text-purple-600 mb-4">02</div>
-                <h4 class="font-semibold mb-2">Add Players</h4>
-                <p class="text-gray-600 text-sm">
-                    Build your digital roster.
-                </p>
+            <h3 class="text-xl font-black uppercase tracking-wider mb-3">Performance Analytics</h3>
+            <p class="text-gray-600 text-sm leading-relaxed font-medium">Track match statistics, physical growth, and seasonal performance. Make data-driven decisions to foster elite talent.</p>
+        </div>
+        <!-- Service 3 -->
+        <div class="bg-white p-8 border-2 border-transparent hover:border-purple-600 transition-colors shadow-lg group">
+            <div class="w-14 h-14 bg-black text-white flex items-center justify-center mb-6 group-hover:bg-purple-600 transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
             </div>
-
-            <div>
-                <div class="text-4xl font-bold text-purple-600 mb-4">03</div>
-                <h4 class="font-semibold mb-2">Track Performance</h4>
-                <p class="text-gray-600 text-sm">
-                    Monitor stats and development.
-                </p>
-            </div>
-
-            <div>
-                <div class="text-4xl font-bold text-purple-600 mb-4">04</div>
-                <h4 class="font-semibold mb-2">Showcase Talent</h4>
-                <p class="text-gray-600 text-sm">
-                    Connect players to opportunities.
-                </p>
-            </div>
-
+            <h3 class="text-xl font-black uppercase tracking-wider mb-3">Global Scouting</h3>
+            <p class="text-gray-600 text-sm leading-relaxed font-medium">Give your players visibility. Our directory allows verified international scouts and clubs to discover your top-performing athletes.</p>
         </div>
     </div>
 </section>
 
+<!-- PARTNERSHIPS SECTION -->
+<section id="partnerships" class="py-16 bg-white border-y-2 border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h3 class="text-sm font-black uppercase tracking-widest text-gray-400 mb-8">Trusted by Elite Academies & Brands</h3>
+        <div class="flex flex-wrap justify-center items-center gap-12 opacity-50 grayscale">
+            <!-- Placeholders for partner logos -->
+            <div class="text-2xl font-black tracking-tighter">PARTNER<span class="text-purple-600">ONE</span></div>
+            <div class="text-2xl font-black tracking-tighter">ELITE<span class="text-black">SPORTS</span></div>
+            <div class="text-2xl font-black tracking-tighter">GLOBAL<span class="text-purple-600">SCOUT</span></div>
+            <div class="text-2xl font-black tracking-tighter">ACADEMY<span class="text-black">PRO</span></div>
+        </div>
+    </div>
+</section>
 
-<!-- FINAL CTA -->
-<section class="bg-purple-700 text-white py-20 text-center">
-    <div class="max-w-3xl mx-auto px-6">
-        <h2 class="text-3xl md:text-4xl font-extrabold mb-6">
-            Ready to Professionalize Your Academy?
-        </h2>
+<!-- PRICING SECTION -->
+<section id="pricing" class="py-20 bg-gray-100 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+        <h2 class="text-4xl font-black uppercase tracking-tight text-black mb-4">Flexible <span class="text-purple-600">Pricing</span></h2>
+        <div class="w-24 h-1 bg-black mx-auto mb-4"></div>
+        <p class="text-gray-600 font-medium">Start for free. Upgrade as your academy grows.</p>
+    </div>
 
-        <a href="{% url 'register' %}"
-           class="inline-block px-10 py-4 bg-white text-purple-700 font-bold rounded-xl shadow-lg hover:bg-gray-100 transition">
-            Get Started Now
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <!-- Basic -->
+        <div class="bg-white p-8 border border-gray-200 text-center hover:shadow-xl transition flex flex-col">
+            <h3 class="text-xl font-black uppercase tracking-wider text-gray-500 mb-2">Starter</h3>
+            <div class="text-4xl font-black mb-6">$0<span class="text-sm text-gray-400 font-medium">/mo</span></div>
+            <ul class="text-sm font-medium text-gray-600 space-y-3 mb-8 flex-grow">
+                <li>Up to 20 Players</li>
+                <li>Basic Stats Tracking</li>
+                <li>Community Support</li>
+            </ul>
+            <a href="{% url 'register' %}" class="block w-full border-2 border-black text-black py-3 text-sm font-black uppercase tracking-widest hover:bg-black hover:text-white transition">Choose Starter</a>
+        </div>
+        <!-- Pro (Highlighted) -->
+        <div class="bg-black text-white p-8 border-t-8 border-purple-600 shadow-2xl text-center transform md:-translate-y-4 flex flex-col">
+            <h3 class="text-xl font-black uppercase tracking-wider text-purple-400 mb-2">Professional</h3>
+            <div class="text-4xl font-black mb-6">$49<span class="text-sm text-gray-400 font-medium">/mo</span></div>
+            <ul class="text-sm font-medium text-gray-300 space-y-3 mb-8 flex-grow border-t border-gray-800 pt-6">
+                <li>Unlimited Players</li>
+                <li>Advanced Analytics & Video</li>
+                <li>Scout Directory Access</li>
+                <li>Priority Support</li>
+            </ul>
+            <a href="{% url 'register' %}" class="block w-full bg-purple-600 text-white py-3 text-sm font-black uppercase tracking-widest hover:bg-purple-500 transition shadow-[4px_4px_0px_0px_rgba(255,255,255,0.2)] hover:shadow-none hover:translate-y-1 hover:translate-x-1">Get Pro</a>
+        </div>
+        <!-- Enterprise -->
+        <div class="bg-white p-8 border border-gray-200 text-center hover:shadow-xl transition flex flex-col">
+            <h3 class="text-xl font-black uppercase tracking-wider text-gray-500 mb-2">Enterprise</h3>
+            <div class="text-4xl font-black mb-6">Custom</div>
+            <ul class="text-sm font-medium text-gray-600 space-y-3 mb-8 flex-grow">
+                <li>Multiple Academies</li>
+                <li>API Integrations</li>
+                <li>Custom Branding</li>
+                <li>Dedicated Manager</li>
+            </ul>
+            <a href="#contact" class="block w-full border-2 border-black text-black py-3 text-sm font-black uppercase tracking-widest hover:bg-black hover:text-white transition">Contact Us</a>
+        </div>
+    </div>
+</section>
+
+<!-- BOTTOM CTA SECTION -->
+<section class="bg-purple-700 text-white py-16 w-full max-w-none m-0 px-4 sm:px-6 lg:px-8 text-center border-t-4 border-black">
+    <div class="max-w-3xl mx-auto">
+        <h2 class="text-3xl md:text-5xl font-black uppercase tracking-tight mb-6">Ready to Professionalize?</h2>
+        <p class="text-lg text-purple-200 font-medium mb-10">Join hundreds of academies already managing their talent the right way.</p>
+        <a href="{% url 'register' %}" class="inline-block bg-black text-white px-10 py-5 text-base font-black uppercase tracking-widest hover:bg-gray-900 transition-all shadow-[6px_6px_0px_0px_rgba(255,255,255,0.3)] hover:shadow-none hover:translate-y-1 hover:translate-x-1">
+            Create Your Account Today
         </a>
     </div>
 </section>
-
 {% endblock %}
