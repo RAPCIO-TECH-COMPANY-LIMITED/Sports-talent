@@ -76,6 +76,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'talentplatform.wsgi.application'
 
+# settings.py
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'julietcristiana780@gmail.com'
+
 
 LOGIN_REDIRECT_URL = 'dashboard'
 MEDIA_URL = '/media/'

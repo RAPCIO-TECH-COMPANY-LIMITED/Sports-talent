@@ -22,4 +22,5 @@ urlpatterns = [
     # Super Admin & Directory
     path('directory/', views.SuperAdminDashboardView.as_view(), name='super_admin_dashboard'),
     path('academy/<int:pk>/', views.AcademyDetailView.as_view(), name='academy_detail'),
+    path('contact/', views.contact_view, name='contact'),
 ]
